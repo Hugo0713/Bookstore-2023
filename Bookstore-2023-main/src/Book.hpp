@@ -12,10 +12,10 @@ private:
     char Author[61];
     char Keyword[61];
     int quantity;
-    double price;
+    double Price;
 
 public:
-    Book() = default;
+    Book() : ISBN{}, BookName{}, Author{}, Keyword{}, quantity(0), Price(0.0) {}
 
     bool operator==(const Book &obj) const
     {
@@ -43,10 +43,13 @@ public:
         return Keyword;
     }
     
-    void show(char *index);
+    void show_ISBN(char *index);
+    void show_name(char *index);
+    void show_author(char *index);
+    void show_keyword(char *index);
     void buy(char *ISBN, int quantity);
     void select(char *ISBN);
-    void modify(char *index);
+    void modify(char *bookname, char *author, char *keyword, double price);
     void import(int quantity, double Totalcost);
 };
 

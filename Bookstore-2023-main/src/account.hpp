@@ -12,10 +12,15 @@ private:
     char Passward[31];
     char Username[31];
     int Privilege;
+    bool status = false;
 
 public:
-    Account() = default;
-
+    Account() :ID{}, Passward{}, Username{}, Privilege(0), status(false) {}
+    Account(char *id) : Passward{}, Username{}, Privilege(0), status(false)
+    {
+        strncpy(ID, id, sizeof(ID));
+    }
+    
     bool operator==(const Account &obj) const 
     {
         if(ID == obj.ID && Passward == obj.Passward && Username == obj.Username && Privilege == obj.Privilege)
