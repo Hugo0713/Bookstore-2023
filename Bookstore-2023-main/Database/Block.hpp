@@ -1,28 +1,31 @@
 #ifndef CODE_BLOCK_HPP
 #define CODE_BLOCK_HPP
 
+#include <cstring>
+
 template <typename valueType>
 class Block // 序列化存储
 {
 public:
-    valueType value;        // 值
-    int size;       // 索引块对应值块个数
-    int nextBlock;  // 索引块后继索引->
-    int idx;        // 索引块：值块位置
-    char index[31]; // 键 ID:31 ISBN:21
+    valueType value; // 值
+    int size;        // 索引块对应值块个数
+    int nextBlock;   // 索引块后继索引->
+    int idx;         // 索引块：值块位置
+    char index[31];  // 键 ID:31 ISBN:21
 
-    Block(const char *key, valueType &Value) : size(0), nextBlock(0), idx(0)
+    Block() : value(), size(0), nextBlock(0), idx(0), index{} {}
+
+    // Block(const char *key, const valueType &Value) : size(0), nextBlock(0), idx(0), index(key), value(Value) {}
+    Block(const char *key, const valueType &Value) : size(0), nextBlock(0), idx(0)
     {
-        strcpy(index, key);
+        strncpy(index, key, sizeof(index));
         value = Value;
-        //memset(index, '\0', sizeof(index));
     }
 
     // void initialise() // 初始化读入
     // {
-        
+
     // }
-    
 
     bool operator==(const Block &obj) const
     {

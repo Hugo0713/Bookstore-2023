@@ -15,24 +15,24 @@ class Database
 public:
     const int MAX = 1024;
     const int LIMIT = 1000;
-    const int SIZE = sizeof(Block);
+    const int SIZE = sizeof(Block<valueType>);
 
     MemoryRiver<Block<valueType>, 3> File; // 前置参数：总块数，起始块，裂块位置
     std::vector<Block<valueType>> block_value;
     std::vector<Block<valueType>> block_index;
 
-    Database(std::string file_name) : block_value(MAX), block_index(MAX) 
+    Database(std::string file_name) : block_value(MAX), block_index(MAX)
     {
         File.initialise(file_name);
     }
-    
+
     int index_find(Block<valueType> &blk);
 
     void Split(int num, int size);
 
     void Insert(Block<valueType> &blk);
 
-    void Find(Block<valueType> &blk);
+    valueType &Find(Block<valueType> &blk);
 
     bool ifFind(Block<valueType> &blk);
 
@@ -63,7 +63,7 @@ void Database<valueType>::Split(int num, int size)
 {
     int mid = size / 2; // 分裂点
 
-    Block pre, now;
+    Block<valueType> pre, now;
     File.read(pre, 12 + (num - 1) * SIZE, 1); // 读取待分裂块
     File.read(block_value[1], 12 + pre.idx * MAX * SIZE, size);
 
@@ -98,33 +98,33 @@ void Database<valueType>::Insert(Block<valueType> &blk)
     if (total == 0) // 外存为空初始化
     {
         ++total;
-        bll.idx = 1;
-        bll.size = 1;
+        blk.idx = 1;
+        blk.size = 1;
         File.write_info(total, 1);
         File.write_info(total, 2);
         File.write_info(total, 3);
-        File.write(bll, 12, 1);              // 索引块写入
-        File.write(bll, 12 + MAX * SIZE, 1); // 值块写入
+        File.write(blk, 12, 1);              // 索引块写入
+        File.write(blk, 12 + MAX * SIZE, 1); // 值块写入
         return;
     }
-    Block pre, now;
-    int target = index_find(bll);
+    Block<valueType> pre, now;
+    int target = index_find(blk);
     File.read(pre, 12 + (target - 1) * SIZE, 1);                                                                            // 读取索引块
     File.read(block_value[1], 12 + pre.idx * MAX * SIZE, pre.size);                                                         // 读取值块
-    int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + 1 + pre.size, bll) - block_value.begin() - 1; // 计算值块中的插入位置
-    if (block_value[num + 1] == bll && num < pre.size)                                                                      // 元素重复
+    int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + 1 + pre.size, blk) - block_value.begin() - 1; // 计算值块中的插入位置
+    if (block_value[num + 1] == blk && num < pre.size)                                                                      // 元素重复
     {
         return;
     }
     if (num == 0) // 值块内最小
     {
-        File.write(bll, 12 + pre.idx * MAX * SIZE, 1);                          // 写入索引块
+        File.write(blk, 12 + pre.idx * MAX * SIZE, 1);                          // 写入索引块
         File.write(block_value[1], 12 + pre.idx * MAX * SIZE + SIZE, pre.size); // 写入值块
-        now = bll;
+        now = blk;
     }
     else
     {
-        File.write(bll, 12 + pre.idx * MAX * SIZE + num * SIZE, 1);
+        File.write(blk, 12 + pre.idx * MAX * SIZE + num * SIZE, 1);
         File.write(block_value[1], 12 + pre.idx * MAX * SIZE, num);
         if (num != pre.size) // 非最大
         {
@@ -143,30 +143,30 @@ void Database<valueType>::Insert(Block<valueType> &blk)
     }
 }
 
-template <typename valueType> 
+template <typename valueType>
 bool Database<valueType>::ifFind(Block<valueType> &blk)
 {
     int total, start;
-    int target = index_find(bll);
-    File_account.get_info(total, 1);
-    File_account.get_info(start, 2);
+    int target = index_find(blk);
+    File.get_info(total, 1);
+    File.get_info(start, 2);
     if (total == 0)
     {
         return false;
     }
 
-    BlockAccount tmp;
+    Block<valueType> tmp;
     bool nextOne = true; // 循环控制
     bool flag = false;   // 查找判断
     while (nextOne)
     {
-        File_account.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
-        File_account.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
-        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, bll) - block_value.begin();
+        File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
+        File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
+        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, blk) - block_value.begin();
 
         for (int i = num; i <= tmp.size; ++i)
         {
-            if (strcmp(block_value[i].index, bll.index) == 0) // 匹配
+            if (strcmp(block_value[i].index, blk.index) == 0) // 匹配
             {
                 flag = true;
             }
@@ -190,34 +190,32 @@ bool Database<valueType>::ifFind(Block<valueType> &blk)
 }
 
 template <typename valueType>
-void Database<valueType>::Find(Block<valueType> &blk)
+valueType &Database<valueType>::Find(Block<valueType> &blk)
 {
     int total, start;
-    int target = index_find(bll);
+    int target = index_find(blk);
     File.get_info(total, 1);
     File.get_info(start, 2);
     if (total == 0)
     {
-        std::cout << "null"
-                  << "\n";
-        return;
+        throw std::runtime_error("Invalid\n");
     }
 
-    Block tmp;
+    Block<valueType> tmp;
     bool nextOne = true; // 循环控制
     bool flag = false;   // 查找判断
     while (nextOne)
     {
         File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
         File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
-        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, bll) - block_value.begin();
+        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, blk) - block_value.begin();
 
         for (int i = num; i <= tmp.size; ++i)
         {
-            if (strcmp(block_value[i].index, bll.index) == 0) // 匹配
+            if (strcmp(block_value[i].index, blk.index) == 0) // 匹配
             {
                 flag = true;
-                std::cout << block_value[i].value << " ";
+                return block_value[i].value;
             }
             else
             {
@@ -233,9 +231,9 @@ void Database<valueType>::Find(Block<valueType> &blk)
     }
     if (!flag) // 查找失败
     {
-        std::cout << "null";
+        throw std::runtime_error("Invalid\n");
     }
-    std::cout << "\n";
+    throw std::logic_error("Invalid\n");
 }
 
 template <typename valueType>
@@ -243,16 +241,16 @@ void Database<valueType>::Delete(Block<valueType> &blk)
 {
     int total, start;
     File.get_info(total, 1);
-    int target = index_find(bll);
+    int target = index_find(blk);
     if (total == 0)
     {
         return;
     }
-    Block tmp;
+    Block<valueType> tmp;
     File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读入索引块
     File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读入值块
-    int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, bll) - block_value.begin() - 1;
-    if (bll != block_value[num + 1]) // 无匹配值块
+    int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, blk) - block_value.begin() - 1;
+    if (blk != block_value[num + 1]) // 无匹配值块
     {
         return;
     }

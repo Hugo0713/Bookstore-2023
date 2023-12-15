@@ -3,8 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/Bookstore-2023-main/Database"
+                "${workspaceFolder}/**"
             ],
             "defines": [],
             "cStandard": "c17",

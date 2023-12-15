@@ -1,4 +1,4 @@
-#include "account.hpp"
+#include "Account.hpp"
 #include <cstring>
 
 int Account::getPrivilege()
@@ -9,7 +9,6 @@ int Account::getPrivilege()
 void Account::setroot()
 {
     Account root;
-    
     strcpy(root.ID, "root");
     strcpy(root.Passward, "sjtu");
     strcpy(root.Username, "root");

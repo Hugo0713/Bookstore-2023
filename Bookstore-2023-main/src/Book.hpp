@@ -2,7 +2,7 @@
 #define CODE_BOOK_HPP
 
 #include <iostream>
-#include "Database/Database_book_ISBN.hpp"
+#include"/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
 
 class Book
 {
@@ -15,6 +15,8 @@ private:
     double price;
 
 public:
+    Book() = default;
+
     bool operator==(const Book &obj) const
     {
         return ISBN == obj.ISBN;
@@ -47,5 +49,10 @@ public:
     void modify(char *index);
     void import(int quantity, double Totalcost);
 };
+
+Database<Book> books_ISBN("File_ISBN");
+Database<Book> books_Name("File_Name");
+Database<Book> books_Author("File_Author");
+Database<Book> books_Keyword("File_Keyword");
 
 #endif
