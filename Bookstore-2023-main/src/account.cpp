@@ -1,49 +1,49 @@
 #include "account.hpp"
 #include <cstring>
 
-int account::getPrivilege()
+int Account::getPrivilege()
 {
     return Privilege;
 }
 
-void account::setroot()
+void Account::setroot()
 {
-    Block blk;
-    account root;
+    Account root;
+    
     strcpy(root.ID, "root");
     strcpy(root.Passward, "sjtu");
     strcpy(root.Username, "root");
+    Block<Account> blk("root", root);
     root.Privilege = 7;
-    blk.initialise("root", root);
-    insert_(blk);
+    users.Insert(blk);
 }
 
-void account::login(char *ID, char *Passward)
+void Account::login(char *ID, char *Passward)
 {
     
 }
 
-void account::logout()
+void Account::logout()
 {
 
 }
 
-void account::signup(char *ID, char *Passward, char *Username)
+void Account::signup(char *ID, char *Passward, char *Username)
 {
 
 }
 
-void account::modify(char *ID, char *Cur_Passward, char *New_Passward)
+void Account::modify(char *ID, char *Cur_Passward, char *New_Passward)
 {
 
 }
 
-void account::useradd(char *ID, char *Passward, int privilege, char *Username)
+void Account::useradd(char *ID, char *Passward, int privilege, char *Username)
 {
 
 }
 
-void account::del(char *ID)
+void Account::del(char *ID)
 {
     
 }

@@ -1,13 +1,17 @@
 #include<iostream>
 #include"Utils/tokenScanner.hpp"
-#include"Database/Database_account.hpp"
-#include"Database/Database_book_ISBN.hpp"
 #include"src/account.hpp"
 #include"src/Book.hpp"
+//#include"Database/Database_account.hpp"
+#include"Database/Database_book_ISBN.hpp"
 
 
 
-void processLine(std::string line, account &user)
+
+
+
+
+void processLine(std::string line, Account &user)
 {
     TokenScanner scanner;
     scanner.ignoreWhitespace();
@@ -22,8 +26,7 @@ void processLine(std::string line, account &user)
         ++i; 
     }
     
-    File_account.initialise("File_account");
-    File_book.initialise("File_book");
+    
     if(token[1] == "quit" && token[1] == "exit")
     {
         exit(0);//是否需要析构？？？
@@ -57,7 +60,8 @@ void processLine(std::string line, account &user)
 
 int main()
 {
-    account user;
+    Account user;
+    Book book;
     user.setroot();
     while(true)
     {

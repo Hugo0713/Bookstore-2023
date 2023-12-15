@@ -24,6 +24,23 @@ public:
         return ISBN < obj.ISBN;
     }
 
+    const char* getISBN() const
+    {
+        return ISBN;
+    }
+    const char* getName() const
+    {
+        return BookName;
+    }
+    const char* getAuthor() const
+    {
+        return Author;
+    }
+    const char* getKeyword() const
+    {
+        return Keyword;
+    }
+    
     void show(char *index);
     void buy(char *ISBN, int quantity);
     void select(char *ISBN);

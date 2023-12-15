@@ -1,72 +1,46 @@
 #ifndef CODE_DATABASE_HPP
 #define CODE_DATABASE_HPP
 
-
 #include <cstring>
 #include <vector>
 #include <climits>
 #include <iostream>
 #include <fstream>
 #include "MemoryRiver.hpp"
+#include "Block.hpp"
 
-
-const int MAX = 1024;
-const int LIMIT = 1000;
-
-class Block // 序列化存储
+template <typename valueType>
+class Database
 {
 public:
-    int value;        // 值
-    int size;       // 索引块对应值块个数
-    int nextBlock;  // 索引块后继索引->
-    int idx;        // 索引块：值块位置
-    char index[68]; // 键
+    const int MAX = 1024;
+    const int LIMIT = 1000;
+    const int SIZE = sizeof(Block);
 
-    Block() : value(0), size(0), nextBlock(0), idx(0)
-    {
-        memset(index, '\0', sizeof(index));
-    }
+    MemoryRiver<Block<valueType>, 3> File; // 前置参数：总块数，起始块，裂块位置
+    std::vector<Block<valueType>> block_value;
+    std::vector<Block<valueType>> block_index;
 
-    void initialise(int x) // 初始化读入
+    Database(std::string file_name) : block_value(MAX), block_index(MAX) 
     {
-        std::cin >> index;
-        if (x == 0)
-        {
-            std::cin >> value;
-        }
-        else
-        {
-            value = INT_MIN;
-        }
-        return;
+        File.initialise(file_name);
     }
+    
+    int index_find(Block<valueType> &blk);
 
-    bool operator==(const Block &obj) const
-    {
-        return strcmp(index, obj.index) == 0 && value == obj.value;
-    }
-    bool operator!=(const Block &obj) const
-    {
-        return !(*this == obj);
-    }
-    bool operator<(const Block &obj) const
-    {
-        return strcmp(index, obj.index) < 0   ? true
-               : strcmp(index, obj.index) > 0 ? false
-                                              : value < obj.value;
-    }
-    bool operator>(const Block &obj) const
-    {
-        return !(*this == obj) && !(*this < obj);
-    }
+    void Split(int num, int size);
+
+    void Insert(Block<valueType> &blk);
+
+    void Find(Block<valueType> &blk);
+
+    bool ifFind(Block<valueType> &blk);
+
+    void Delete(Block<valueType> &blk);
 };
 
-const int SIZE = sizeof(Block);
-MemoryRiver<Block, 3> File; // 前置参数：总块数，起始块，裂块位置
-std::vector<Block> block_value(1024);
-std::vector<Block> block_index(1024);
-
-int index_find(Block &blk)
+template <typename valueType>
+int Database<valueType>::index_find(Block<valueType> &blk)
 {
     int total, start;
     File.get_info(total, 1);
@@ -84,7 +58,8 @@ int index_find(Block &blk)
     return target;
 }
 
-void split_(int num, int size)
+template <typename valueType>
+void Database<valueType>::Split(int num, int size)
 {
     int mid = size / 2; // 分裂点
 
@@ -112,7 +87,8 @@ void split_(int num, int size)
     File.write(pre, 12 + (num - 1) * SIZE, 1);
 }
 
-void insert_(Block &bll)
+template <typename valueType>
+void Database<valueType>::Insert(Block<valueType> &blk)
 {
     int total, start, cur;
     File.get_info(total, 1);
@@ -163,11 +139,58 @@ void insert_(Block &bll)
     File.write(now, 12 + target * SIZE - SIZE, 1); // 更新索引块
     if (now.size > LIMIT)                          // 超出值块最大容量
     {
-        split_(target, now.size);
+        Split(target, now.size);
     }
 }
 
-void find_(Block &bll)
+template <typename valueType> 
+bool Database<valueType>::ifFind(Block<valueType> &blk)
+{
+    int total, start;
+    int target = index_find(bll);
+    File_account.get_info(total, 1);
+    File_account.get_info(start, 2);
+    if (total == 0)
+    {
+        return false;
+    }
+
+    BlockAccount tmp;
+    bool nextOne = true; // 循环控制
+    bool flag = false;   // 查找判断
+    while (nextOne)
+    {
+        File_account.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
+        File_account.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
+        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, bll) - block_value.begin();
+
+        for (int i = num; i <= tmp.size; ++i)
+        {
+            if (strcmp(block_value[i].index, bll.index) == 0) // 匹配
+            {
+                flag = true;
+            }
+            else
+            {
+                nextOne = false;
+                break;
+            }
+        }
+        target = tmp.nextBlock; // 更新为下一索引
+        if (target == 0)
+        {
+            break;
+        }
+    }
+    if (!flag) // 查找失败
+    {
+        return false;
+    }
+    return true;
+}
+
+template <typename valueType>
+void Database<valueType>::Find(Block<valueType> &blk)
 {
     int total, start;
     int target = index_find(bll);
@@ -215,7 +238,8 @@ void find_(Block &bll)
     std::cout << "\n";
 }
 
-void delete_(Block &bll)
+template <typename valueType>
+void Database<valueType>::Delete(Block<valueType> &blk)
 {
     int total, start;
     File.get_info(total, 1);

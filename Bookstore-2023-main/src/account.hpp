@@ -2,9 +2,10 @@
 #define CODE_ACCOUNT_HPP
 
 #include <iostream>
-#include"Database/Database_account.hpp"
+#include"Database/Database.hpp"
 
-class account
+
+class Account
 {
 private:
     char ID[31];
@@ -13,9 +14,9 @@ private:
     int Privilege;
 
 public:
-    account() = default;
+    Account() = default;
 
-    bool operator==(const account &obj) const 
+    bool operator==(const Account &obj) const 
     {
         if(ID == obj.ID && Passward == obj.Passward && Username == obj.Username && Privilege == obj.Privilege)
         {
@@ -23,7 +24,7 @@ public:
         }
         return false;
     }
-    bool operator<(const account &obj) const 
+    bool operator<(const Account &obj) const 
     {
         if(Privilege != obj.Privilege)
         {
@@ -41,7 +42,8 @@ public:
     void useradd(char *ID, char *Passward, int privilege, char *Username);
     void del(char *ID);
 };
+Database<Account> users("File_account");
+std::vector<Account> login_stack;
 
-std::vector<account> login_stack;
 
 #endif

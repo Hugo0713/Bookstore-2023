@@ -4,9 +4,6 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}",
-                "${workspaceFolder}/Bookstore-2023-main",
-                "${workspaceFolder}/Bookstore-2023-main",
                 "${workspaceFolder}/Bookstore-2023-main/Database"
             ],
             "defines": [],
