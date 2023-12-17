@@ -64,8 +64,8 @@ public:
     void useradd(char *ID, char *Passward, int privilege, char *Username);
     void del(char *ID);
 };
-Database<Account> users("File_Account");
-std::vector<Account> login_stack;
+static Database<Account> users("File_Account");
+static std::vector<Account> login_stack;
 
 
 #endif

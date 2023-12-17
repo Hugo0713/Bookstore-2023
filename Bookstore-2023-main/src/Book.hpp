@@ -78,9 +78,9 @@ public:
     void import(int quantity, double Totalcost);
 };
 
-Database<Book> books_ISBN("File_ISBN");
-Database<Book> books_Name("File_Name");
-Database<Book> books_Author("File_Author");
-Database<Book> books_Keyword("File_Keyword");
+static Database<Book> books_ISBN("File_ISBN");
+static Database<Book> books_Name("File_Name");
+static Database<Book> books_Author("File_Author");
+static Database<Book> books_Keyword("File_Keyword");
 
 #endif
