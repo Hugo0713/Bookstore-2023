@@ -148,6 +148,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc \
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/Book.hpp \
  /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp \
  /usr/include/c++/11/cstring /usr/include/string.h /usr/include/strings.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \

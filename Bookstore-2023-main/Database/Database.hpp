@@ -36,6 +36,8 @@ public:
 
     bool ifFind(Block<valueType> &blk);
 
+    void showFind(Block<valueType> &blk);
+
     void Delete(Block<valueType> &blk);
 };
 
@@ -216,6 +218,53 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
             {
                 flag = true;
                 return block_value[i].value;
+            }
+            else
+            {
+                nextOne = false;
+                break;
+            }
+        }
+        target = tmp.nextBlock; // 更新为下一索引
+        if (target == 0)
+        {
+            break;
+        }
+    }
+    if (!flag) // 查找失败
+    {
+        throw std::runtime_error("Invalid\n");
+    }
+    throw std::logic_error("Invalid\n");
+}
+
+template <typename valueType>
+void Database<valueType>::showFind(Block<valueType> &blk)
+{
+    int total, start;
+    int target = index_find(blk);
+    File.get_info(total, 1);
+    File.get_info(start, 2);
+    if (total == 0)
+    {
+        throw std::runtime_error("Invalid\n");
+    }
+
+    Block<valueType> tmp;
+    bool nextOne = true; // 循环控制
+    bool flag = false;   // 查找判断
+    while (nextOne)
+    {
+        File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
+        File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
+        int num = std::lower_bound(block_value.begin() + 1, block_value.begin() + tmp.size + 1, blk) - block_value.begin();
+
+        for (int i = num; i <= tmp.size; ++i)
+        {
+            if (strcmp(block_value[i].index, blk.index) == 0) // 匹配
+            {
+                flag = true;
+                std::cout << block_value[i].value;
             }
             else
             {

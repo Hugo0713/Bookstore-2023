@@ -732,6 +732,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o: ../Bookstore-2023-main/main.
   /usr/include/c++/11/sstream \
   /usr/include/c++/11/bits/sstream.tcc \
   ../Bookstore-2023-main/src/Account.hpp \
+  ../Bookstore-2023-main/src/Book.hpp \
   ../Bookstore-2023-main/Database/Database.hpp \
   /usr/include/c++/11/cstring \
   /usr/include/string.h \
@@ -766,7 +767,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o: ../Bookstore-2023-main/main.
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/linux/close_range.h \
   ../Bookstore-2023-main/Database/Block.hpp \
-  ../Bookstore-2023-main/src/Book.hpp
+  ../Bookstore-2023-main/src/Log.hpp
 
 CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: ../Bookstore-2023-main/src/Account.cpp \
   /usr/include/stdc-predef.h \
@@ -949,6 +950,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: ../Bookstore-2023-mai
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/bits/istream.tcc \
+  ../Bookstore-2023-main/src/Book.hpp \
   ../Bookstore-2023-main/Database/Database.hpp \
   /usr/include/c++/11/cstring \
   /usr/include/string.h \
@@ -1198,7 +1200,8 @@ CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o: ../Bookstore-2023-main/s
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
   /usr/include/linux/close_range.h \
-  ../Bookstore-2023-main/Database/Block.hpp
+  ../Bookstore-2023-main/Database/Block.hpp \
+  ../Bookstore-2023-main/src/Account.hpp
 
 
 /usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
@@ -1266,6 +1269,8 @@ CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o: ../Bookstore-2023-main/s
 /usr/include/c++/11/ostream:
 
 /usr/include/c++/11/bits/unique_ptr.h:
+
+../Bookstore-2023-main/src/Log.hpp:
 
 /usr/include/c++/11/bits/locale_conv.h:
 

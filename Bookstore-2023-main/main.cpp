@@ -1,7 +1,8 @@
 #include<iostream>
 #include"Utils/tokenScanner.hpp"
 #include"src/Account.hpp"
-#include"src/Book.hpp"
+//#include"src/Book.hpp"
+#include"src/Log.hpp"
 
 
 
@@ -87,6 +88,10 @@ void processLine(std::string line, Account &user, Book &book)
         {
             book.show_keyword(token[3].data());
         }
+        if(token[2].empty())
+        {
+            book.show_all();
+        }
     }
     if(token[1] == "buy")
     {
@@ -98,7 +103,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if(token[1] == "modify")
     {
-        std::string tmp[3]{};
+        std::string tmp[4]{};
         int i = 2;
         while(i <= 9)
         {
@@ -125,6 +130,11 @@ void processLine(std::string line, Account &user, Book &book)
     if(token[1] == "import")
     {
         book.import(stoi(token[2]), stod(token[3]));
+    }
+
+    if(token[1] == "show" && token[2] == "finance")
+    {
+
     }
 }
 

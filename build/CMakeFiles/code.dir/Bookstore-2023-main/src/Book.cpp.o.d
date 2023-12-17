@@ -174,4 +174,5 @@ CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
- /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/Block.hpp
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/Block.hpp \
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/Account.hpp

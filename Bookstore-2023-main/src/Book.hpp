@@ -2,8 +2,10 @@
 #define CODE_BOOK_HPP
 
 #include <iostream>
-#include"/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
+//#include "Account.hpp"
+#include "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
 
+class Account;
 class Book
 {
 private:
@@ -15,6 +17,7 @@ private:
     double Price;
 
 public:
+    bool ifselected = false;
     Book() : ISBN{}, BookName{}, Author{}, Keyword{}, quantity(0), Price(0.0) {}
 
     bool operator==(const Book &obj) const
@@ -25,29 +28,51 @@ public:
     {
         return ISBN < obj.ISBN;
     }
+    Book &operator=(const Book &obj)
+    {
+        if (this == &obj)
+        {
+            return *this;
+        }
+        strncpy(ISBN, obj.ISBN, sizeof(ISBN));
+        strncpy(BookName, obj.BookName, sizeof(BookName));
+        strncpy(Author, obj.Author, sizeof(Author));
+        strncpy(Keyword, obj.Keyword, sizeof(Keyword));
+        quantity = obj.quantity;
+        Price = obj.Price;
+        ifselected = obj.ifselected;
+        return *this;
+    }
 
-    const char* getISBN() const
+    friend std::ostream &operator<<(std::ostream &out, const Book &obj)
+    {
+        out << obj.ISBN << "\t" << obj.BookName << "\t" << obj.Keyword << "\t" << obj.Price << "\t" << obj.quantity << "\n";
+        return out;
+    }
+
+    const char *getISBN() const
     {
         return ISBN;
     }
-    const char* getName() const
+    const char *getName() const
     {
         return BookName;
     }
-    const char* getAuthor() const
+    const char *getAuthor() const
     {
         return Author;
     }
-    const char* getKeyword() const
+    const char *getKeyword() const
     {
         return Keyword;
     }
-    
+
     void show_ISBN(char *index);
     void show_name(char *index);
     void show_author(char *index);
     void show_keyword(char *index);
-    void buy(char *ISBN, int quantity);
+    void show_all();
+    double buy(char *ISBN, int quantity);
     void select(char *ISBN);
     void modify(char *bookname, char *author, char *keyword, double price);
     void import(int quantity, double Totalcost);
