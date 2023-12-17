@@ -1,5 +1,5 @@
 #include "Book.hpp"
-#include "Account.hpp"
+//#include "Account.hpp"
 #include <cstring>
 
 void Book::show_ISBN(char *index)
@@ -108,7 +108,8 @@ void Book::select(char *ISBN)
         book = books_ISBN.Find(blk); // 补充值
     }
     book.ifselected = true;
-    login_stack.back().selected = book;
+    strncpy(login_stack.back().selected, book.getISBN(), sizeof(login_stack.back().selected));
+    //login_stack.back().selected = book;
 }
 
 void Book::modify(char *bookname, char *author, char *keyword, double price)
@@ -117,7 +118,9 @@ void Book::modify(char *bookname, char *author, char *keyword, double price)
     {
         throw std::runtime_error("Invalid\n");
     }
-    Book cur = login_stack.back().selected;
+    Book book;
+    Block<Book> tmp(login_stack.back().selected, book);
+    Book cur = books_ISBN.Find(tmp);
     if (bookname[0] != '\0') // 修改cur
     {
         strncpy(cur.BookName, bookname, sizeof(cur.BookName));
@@ -135,7 +138,7 @@ void Book::modify(char *bookname, char *author, char *keyword, double price)
         cur.Price = price;
     }
 
-    Book book;
+    
     Block<Book> blk1(cur.ISBN, book);
     book = books_ISBN.Find(blk1); // 寻找值
     Block<Book> blk2(book.BookName, book);
@@ -173,15 +176,17 @@ void Book::import(int quantity, double Totalcost)
     {
         throw std::runtime_error("Invalid\n");
     }
-
-    Book cur = login_stack.back().selected;
+    Book book; // 创建空对象
+    Block<Book> tmp(login_stack.back().selected, book);
+    Book cur = books_ISBN.Find(tmp);
+    //Book cur = login_stack.back().selected;
     if (!cur.ifselected || quantity <= 0 || Totalcost <= 0)
     {
         throw std::runtime_error("Invalid\n");
     }
     cur.quantity += quantity; // 更改cur
 
-    Book book; // 创建空对象
+    
     Block<Book> blk1(cur.ISBN, book);
     book = books_ISBN.Find(blk1);          // 寻找值
     Block<Book> blk2(book.BookName, book); // 此时book已经非空

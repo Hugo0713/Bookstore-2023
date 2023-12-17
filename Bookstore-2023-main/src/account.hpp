@@ -2,10 +2,10 @@
 #define CODE_ACCOUNT_HPP
 
 #include <iostream>
-#include"Book.hpp"
+//#include"Book.hpp"
 #include"/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
 
-class Book;
+
 class Account
 {
 private:
@@ -16,7 +16,8 @@ private:
     bool status = false;
 
 public:
-    Book selected;
+    char selected[21]; //选中书的ISBN
+    //Book *selected;
     Account() :ID{}, Passward{}, Username{}, Privilege(0), status(false), selected() {}
     Account(char *id) : Passward{}, Username{}, Privilege(0), status(false)
     {
@@ -50,7 +51,7 @@ public:
         strncpy(Username, obj.Username, sizeof(Username));
         Privilege = obj.Privilege;
         status = obj.status;
-        selected = obj.selected;
+        strncpy(selected, obj.selected, sizeof(selected));
         return *this;
     }
 

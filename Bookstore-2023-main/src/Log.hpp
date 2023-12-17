@@ -2,7 +2,7 @@
 #define CODE_LOG_HPP
 
 
-    int Count;
+    int Count = 0;
     // double show_finance(int count)
     // {
 
