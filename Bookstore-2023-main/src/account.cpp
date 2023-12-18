@@ -97,7 +97,7 @@ void Account::modify(char *ID, char *Cur_Passward, char *New_Passward)
 
 void Account::useradd(char *id, char *passward, int privilege, char *username)
 {
-    if (login_stack.empty() || login_stack.back().getPrivilege() < 3 || login_stack.back().getPrivilege() < privilege)
+    if (login_stack.empty() || (login_stack.back().getPrivilege() != 3 && login_stack.back().getPrivilege() != 7) || privilege == 7 || login_stack.back().getPrivilege() < privilege)
     {
         throw std::runtime_error("Invalid\n");
     }

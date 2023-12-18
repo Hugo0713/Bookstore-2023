@@ -57,7 +57,7 @@ public:
 
     int getPrivilege();
     void setroot();
-    void login(char *ID, char *Passward);
+    static void login(char *ID, char *Passward);
     void logout();
     void signup(char *ID, char *Passward, char *Username);
     void modify(char *ID, char *Cur_Passward, char *New_Passward);
