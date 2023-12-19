@@ -150,7 +150,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o: \
  /usr/include/c++/11/sstream /usr/include/c++/11/bits/sstream.tcc \
  /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/Book.hpp \
  /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/Account.hpp \
- /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp \
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/../Database/Database.hpp \
  /usr/include/c++/11/cstring /usr/include/string.h /usr/include/strings.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_uninitialized.h \
  /usr/include/c++/11/bits/stl_vector.h \
@@ -168,7 +168,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \
  /usr/include/c++/11/bits/fstream.tcc \
- /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/MemoryRiver.hpp \
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/../Database/MemoryRiver.hpp \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \
@@ -176,5 +176,5 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
- /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/Database/Block.hpp \
+ /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/../Database/Block.hpp \
  /mnt/x/VS\ code/big\ work/Bookstore-2023-main/Bookstore-2023-main/src/Log.hpp

@@ -72,54 +72,69 @@ std::string TokenScanner::nextToken() {
         delete cp;
         return token;
     }
+    // while (true) {
+    //     if (ignoreWhitespaceFlag) skipSpaces();
+    //     int ch = isp->get();
+    //     if (ch == '/' && ignoreCommentsFlag) {
+    //         ch = isp->get();
+    //         if (ch == '/') {
+    //             while (true) {
+    //                 ch = isp->get();
+    //                 if (ch == '\n' || ch == '\r' || ch == EOF) break;
+    //             }
+    //             continue;
+    //         } else if (ch == '*') {
+    //             int prev = EOF;
+    //             while (true) {
+    //                 ch = isp->get();
+    //                 if (ch == EOF || (prev == '*' && ch == '/')) break;
+    //                 prev = ch;
+    //             }
+    //             continue;
+    //         }
+    //         if (ch != EOF) isp->unget();
+    //         ch = '/';
+    //     }
+    //     if (ch == EOF) return "";
+    //     if ((ch == '"' || ch == '\'') && scanStringsFlag) {
+    //         isp->unget();
+    //         return scanString();
+    //     }
+    //     if (isdigit(ch) && scanNumbersFlag) {
+    //         isp->unget();
+    //         return scanNumber();
+    //     }
+    //     if (isWordCharacter(ch)) {
+    //         isp->unget();
+    //         return scanWord();
+    //     }
+    //     std::string op = std::string(1, ch);
+    //     while (isOperatorPrefix(op)) {
+    //         ch = isp->get();
+    //         if (ch == EOF) break;
+    //         op += ch;
+    //     }
+    //     while (op.length() > 1 && !isOperator(op)) {
+    //         isp->unget();
+    //         op.erase(op.length() - 1, 1);
+    //     }
+    //     return op;
+    // }
+    std::string token = "";
     while (true) {
-        if (ignoreWhitespaceFlag) skipSpaces();
         int ch = isp->get();
-        if (ch == '/' && ignoreCommentsFlag) {
-            ch = isp->get();
-            if (ch == '/') {
-                while (true) {
-                    ch = isp->get();
-                    if (ch == '\n' || ch == '\r' || ch == EOF) break;
-                }
-                continue;
-            } else if (ch == '*') {
-                int prev = EOF;
-                while (true) {
-                    ch = isp->get();
-                    if (ch == EOF || (prev == '*' && ch == '/')) break;
-                    prev = ch;
-                }
-                continue;
+        if (ch == EOF) break;
+        if (ch == ' ') {  // 遇到空格结束切片并返回切片结果
+            if (token.empty()) {
+                continue;  // 跳过连续的空格
+            } else {
+                break;
             }
-            if (ch != EOF) isp->unget();
-            ch = '/';
         }
-        if (ch == EOF) return "";
-        if ((ch == '"' || ch == '\'') && scanStringsFlag) {
-            isp->unget();
-            return scanString();
-        }
-        if (isdigit(ch) && scanNumbersFlag) {
-            isp->unget();
-            return scanNumber();
-        }
-        if (isWordCharacter(ch)) {
-            isp->unget();
-            return scanWord();
-        }
-        std::string op = std::string(1, ch);
-        while (isOperatorPrefix(op)) {
-            ch = isp->get();
-            if (ch == EOF) break;
-            op += ch;
-        }
-        while (op.length() > 1 && !isOperator(op)) {
-            isp->unget();
-            op.erase(op.length() - 1, 1);
-        }
-        return op;
+        token += char(ch);
     }
+  
+    return token;
 }
 
 void TokenScanner::saveToken(std::string token) {
@@ -290,12 +305,19 @@ void TokenScanner::initScanner() {
  */
 
 void TokenScanner::skipSpaces() {
-    while (true) {
+    // while (true) {
+    //     int ch = isp->get();
+    //     if (ch == EOF) return;
+    //     if (!isspace(ch)) {
+    //         isp->unget();
+    //         return;
+    //     }
+    // }
+     while (true) {
         int ch = isp->get();
-        if (ch == EOF) return;
-        if (!isspace(ch)) {
+        if (ch == EOF || !isspace(ch)) {
             isp->unget();
-            return;
+            break;
         }
     }
 }

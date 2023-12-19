@@ -23,17 +23,17 @@ void Account::login(char *ID, char *Passward)
     Block<Account> blk(ID, user); // 键插入
     if (!users.ifFind(blk))       // 查找键
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalidab\n");
     }
     user = users.Find(blk); // 查找并填充对象
     // Block<Account> curBlock(ID, user); //操作块
     if (Passward[0] == '\0' && user.getPrivilege() > login_stack.back().Privilege)
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalidtt\n");
     }
-    if (Passward != user.Passward)
+    if (strcmp(Passward, user.Passward) != 0)
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalidhh\n");
     }
     user.status = true;
     login_stack.push_back(user);
@@ -84,7 +84,7 @@ void Account::modify(char *ID, char *Cur_Passward, char *New_Passward)
     {
         throw std::runtime_error("Invalid\n");
     }
-    if (New_Passward != user.Passward)
+    if (strcmp(New_Passward, user.Passward) != 0)
     {
         throw std::runtime_error("Invalid\n");
     }

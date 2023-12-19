@@ -3,7 +3,7 @@
 
 #include <iostream>
 //#include"Book.hpp"
-#include"/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
+#include"../Database/Database.hpp"
 
 
 class Account
@@ -56,7 +56,7 @@ public:
     }
 
     int getPrivilege();
-    void setroot();
+    static void setroot();
     static void login(char *ID, char *Passward);
     void logout();
     void signup(char *ID, char *Passward, char *Username);

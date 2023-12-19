@@ -8,7 +8,7 @@ void processLine(std::string line, Account &user, Book &book)
 {
     TokenScanner scanner;
     scanner.ignoreWhitespace();
-    scanner.scanNumbers();
+    //scanner.scanNumbers();
     scanner.setInput(line);
     std::string token[9]{};
     int i = 1;
@@ -30,38 +30,47 @@ void processLine(std::string line, Account &user, Book &book)
         }
         ++i;
     }
-    // for(int i = 0; i < 9; ++i)
-    // {
-    //     std::cout << token[i] << i ;
-    // }
+    int j = 1;
+    while(token[j] != "")
+    {
+        std::cout << token[j] << " " << j ;
+        ++j;
+    }
 
+    bool flag = false;
     if (token[1] == "quit" && token[1] == "exit")
     {
         exit(0); // 是否需要析构？？？
     }
     if (token[1] == "su")
     {
-        user.login(token[2].data(), token[3].data());
+        Account::login(token[2].data(), token[3].data());
+        flag = true;
     }
     if (token[1] == "logout")
     {
         user.logout();
+        flag = true;
     }
     if (token[1] == "register")
     {
         user.signup(token[2].data(), token[3].data(), token[4].data());
+        flag = true;
     }
     if (token[1] == "passwd")
     {
         user.modify(token[2].data(), token[3].data(), token[4].data());
+        flag = true;
     }
     if (token[1] == "useradd")
     {
         user.useradd(token[2].data(), token[3].data(), stoi(token[4]), token[5].data());
+        flag = true;
     }
     if (token[1] == "delete")
     {
         user.del(token[2].data());
+        flag = true;
     }
 
     if (token[1] == "show" && token[2] != "finance")
@@ -86,14 +95,17 @@ void processLine(std::string line, Account &user, Book &book)
         {
             book.show_all();
         }
+        flag = true;
     }
     if (token[1] == "buy")
     {
         book.buy(token[2].data(), stoi(token[3]));
+        flag = true;
     }
     if (token[1] == "select")
     {
         book.select(token[2].data());
+        flag = true;
     }
     if (token[1] == "modify")
     {
@@ -120,14 +132,22 @@ void processLine(std::string line, Account &user, Book &book)
             ++j;
         }
         book.modify(tmp[0].data(), tmp[1].data(), tmp[2].data(), stod(tmp[3]));
+        flag = true;
     }
     if (token[1] == "import")
     {
         book.import(stoi(token[2]), stod(token[3]));
+        flag = true;
     }
 
     if (token[1] == "show" && token[2] == "finance")
     {
+        flag = true;
+    }
+
+    if(!flag)
+    {
+        throw std::runtime_error("Invalid\n");
     }
 }
 
@@ -135,7 +155,7 @@ int main()
 {
     Account user;
     Book book;
-    user.setroot();
+    Account::setroot();
     while (true)
     {
         try
