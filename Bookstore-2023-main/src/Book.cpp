@@ -50,14 +50,14 @@ void Book::show_all()
 {
 }
 
-double Book::buy(char *ISBN, int quantity)
+double Book::buy(char *isbn, int quantity)
 {
     if (login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
     Book book;
-    Block<Book> blk1(ISBN, book);
+    Block<Book> blk1(isbn, book);
     if (!books_ISBN.ifFind(blk1))
     {
         throw std::runtime_error("Invalid\n");
@@ -89,18 +89,19 @@ double Book::buy(char *ISBN, int quantity)
     return money;
 }
 
-void Book::select(char *ISBN)
+void Book::select(char *isbn)
 {
+    
     if (login_stack.empty() || login_stack.back().getPrivilege() < 3)
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalid日\n");
     }
     Book book; // 创建空对象
-    Block<Book> blk(ISBN, book);
+    Block<Book> blk(isbn, book);
     if (!books_ISBN.ifFind(blk)) // 无书
     {
-        strncpy(book.ISBN, ISBN, sizeof(book.ISBN));
-        blk.value = book;
+        strncpy(book.ISBN, isbn, sizeof(book.ISBN));
+        blk.value = book; //不小心注释掉导致加入的所有新书isbn为空
         books_ISBN.Insert(blk); // 加入新书
     }
     else
@@ -108,19 +109,22 @@ void Book::select(char *ISBN)
         book = books_ISBN.Find(blk); // 补充值
     }
     book.ifselected = true;
-    strncpy(login_stack.back().selected, book.getISBN(), sizeof(login_stack.back().selected));
-    //login_stack.back().selected = book;
+    strncpy(login_stack.back().selected, isbn, sizeof(login_stack.back().selected));
 }
 
-void Book::modify(char *bookname, char *author, char *keyword, double price)
+void Book::modify(char *isbn, char *bookname, char *author, char *keyword, double price)
 {
-    if (login_stack.empty() || login_stack.back().getPrivilege() < 3)
+    if (login_stack.empty() || login_stack.back().getPrivilege() < 3 || login_stack.back().selected[0] == '\0')
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalid1\n");
     }
     Book book;
     Block<Book> tmp(login_stack.back().selected, book);
     Book cur = books_ISBN.Find(tmp);
+    if(strcmp(isbn, cur.ISBN) == 0 && isbn[0] != '\0')
+    {
+        throw std::runtime_error("Invalid2\n");
+    }
     if (bookname[0] != '\0') // 修改cur
     {
         strncpy(cur.BookName, bookname, sizeof(cur.BookName));

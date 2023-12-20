@@ -3,8 +3,9 @@
 // #include"src/Account.hpp"
 #include "src/Book.hpp"
 #include "src/Log.hpp"
+std::vector<Account> login_stack;
 
-bool check(int k, const std::string token[])
+bool check(int k, const std::string token[])//恰好k个切片
 {
     for(int i = 2; i < 2 + k; ++i)
     {
@@ -12,6 +13,10 @@ bool check(int k, const std::string token[])
         {
             return false;
         }
+    }
+    if(token[k + 2] != "")
+    {
+        return false;
     }
     return true;
 }
@@ -22,7 +27,7 @@ void processLine(std::string line, Account &user, Book &book)
     scanner.ignoreWhitespace();
     //scanner.scanNumbers();
     scanner.setInput(line);
-    std::string token[9]{};
+    std::string token[20]{};
     int i = 1;
     while (scanner.hasMoreTokens())
     {
@@ -50,13 +55,13 @@ void processLine(std::string line, Account &user, Book &book)
     // }
 
     bool flag = false;
-    if (token[1] == "quit" && token[1] == "exit")
+    if (token[1] == "quit" || token[1] == "exit")
     {
         exit(0); // 是否需要析构？？？
     }
     if (token[1] == "su")
     {
-        if(!check(2, token))
+        if(!check(2, token) && !check(1, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -79,7 +84,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "passwd")
     {
-        if(!check(3, token))
+        if(!check(3, token) && !check(2, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -153,33 +158,47 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "modify")
     {
-        if(!check(4, token))//???
+        if(!check(2, token) && !check(4, token) && !check(6, token) && !check(8, token) && !check(10, token))
         {
             throw std::runtime_error("Invalid\n");
         }
-        std::string tmp[4]{};
+        std::string tmp[5]{};
         int j = 2;
         while (j < 9)
         {
-            if (token[j] == "name")
+            if (token[j] == "ISBN")
             {
                 tmp[0] = token[j + 1];
             }
-            if (token[j] == "author")
+            if (token[j] == "name")
             {
                 tmp[1] = token[j + 1];
             }
-            if (token[j] == "keyword")
+            if (token[j] == "author")
             {
                 tmp[2] = token[j + 1];
             }
-            if (token[j] == "price")
+            if (token[j] == "keyword")
             {
                 tmp[3] = token[j + 1];
             }
-            ++j;
+            if (token[j] == "price")
+            {
+                tmp[4] = token[j + 1];
+            }
+            j += 2;
         }
-        book.modify(tmp[0].data(), tmp[1].data(), tmp[2].data(), stod(tmp[3]));
+        //重复附加参数 keyword包含重复信息？
+        double value;
+        if(tmp[4] == "")
+        {
+            value = 0.0;
+        }
+        else
+        {
+            value = stod(tmp[4]);
+        }
+        book.modify(tmp[0].data(), tmp[1].data(), tmp[2].data(), tmp[3].data(), value);
         flag = true;
     }
     if (token[1] == "import")
@@ -205,6 +224,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
+    //std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
     Account::setroot();
@@ -222,8 +242,9 @@ int main()
         }
         catch (const std::exception &e)
         {
-            std::cerr << e.what();
+            std::cout << e.what();
         }
     }
+
     return 0;
 }

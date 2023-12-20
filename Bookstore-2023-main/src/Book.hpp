@@ -22,11 +22,11 @@ public:
 
     bool operator==(const Book &obj) const
     {
-        return ISBN == obj.ISBN;
+        return (strcmp(ISBN, obj.ISBN) == 0);
     }
     bool operator<(const Book &obj) const
     {
-        return ISBN < obj.ISBN;
+        return (strcmp(ISBN, obj.ISBN) < 0);
     }
     Book &operator=(const Book &obj)
     {
@@ -74,7 +74,7 @@ public:
     void show_all();
     double buy(char *ISBN, int quantity);
     void select(char *ISBN);
-    void modify(char *bookname, char *author, char *keyword, double price);
+    void modify(char *isbn, char *bookname, char *author, char *keyword, double price);
     void import(int quantity, double Totalcost);
 };
 
@@ -82,5 +82,5 @@ static Database<Book> books_ISBN("File_ISBN");
 static Database<Book> books_Name("File_Name");
 static Database<Book> books_Author("File_Author");
 static Database<Book> books_Keyword("File_Keyword");
-
+extern std::vector<Account> login_stack;
 #endif

@@ -65,7 +65,7 @@ public:
     void del(char *ID);
 };
 static Database<Account> users("File_Account");
-static std::vector<Account> login_stack;
+extern std::vector<Account> login_stack;
 
 
 #endif
