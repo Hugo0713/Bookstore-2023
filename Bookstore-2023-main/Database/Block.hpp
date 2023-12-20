@@ -21,6 +21,10 @@ public:
         strncpy(index, key, sizeof(index));
         value = Value;
     }
+    Block(const char *key) : size(0), nextBlock(0), idx(0), value()
+    {
+        strncpy(index, key, sizeof(index));
+    }
 
     // void initialise() // 初始化读入
     // {

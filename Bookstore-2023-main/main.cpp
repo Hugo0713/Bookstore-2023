@@ -4,6 +4,18 @@
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 
+bool check(int k, const std::string token[])
+{
+    for(int i = 2; i < 2 + k; ++i)
+    {
+        if(token[i] == "")
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void processLine(std::string line, Account &user, Book &book)
 {
     TokenScanner scanner;
@@ -30,12 +42,12 @@ void processLine(std::string line, Account &user, Book &book)
         }
         ++i;
     }
-    int j = 1;
-    while(token[j] != "")
-    {
-        std::cout << token[j] << " " << j ;
-        ++j;
-    }
+    // int j = 1;
+    // while(token[j] != "")
+    // {
+    //     std::cout << token[j] << " " << j ;
+    //     ++j;
+    // }
 
     bool flag = false;
     if (token[1] == "quit" && token[1] == "exit")
@@ -44,6 +56,10 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "su")
     {
+        if(!check(2, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         Account::login(token[2].data(), token[3].data());
         flag = true;
     }
@@ -54,27 +70,47 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "register")
     {
+        if(!check(3, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.signup(token[2].data(), token[3].data(), token[4].data());
         flag = true;
     }
     if (token[1] == "passwd")
     {
+        if(!check(3, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.modify(token[2].data(), token[3].data(), token[4].data());
         flag = true;
     }
     if (token[1] == "useradd")
     {
+        if(!check(4, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.useradd(token[2].data(), token[3].data(), stoi(token[4]), token[5].data());
         flag = true;
     }
     if (token[1] == "delete")
     {
+        if(!check(1, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.del(token[2].data());
         flag = true;
     }
 
     if (token[1] == "show" && token[2] != "finance")
     {
+        if(!check(2, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         if (token[2] == "ISBN")
         {
             book.show_ISBN(token[3].data());
@@ -99,16 +135,28 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "buy")
     {
+        if(!check(2, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         book.buy(token[2].data(), stoi(token[3]));
         flag = true;
     }
     if (token[1] == "select")
     {
+        if(!check(1, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         book.select(token[2].data());
         flag = true;
     }
     if (token[1] == "modify")
     {
+        if(!check(4, token))//???
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         std::string tmp[4]{};
         int j = 2;
         while (j < 9)
@@ -136,6 +184,10 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "import")
     {
+        if(!check(2, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         book.import(stoi(token[2]), stod(token[3]));
         flag = true;
     }

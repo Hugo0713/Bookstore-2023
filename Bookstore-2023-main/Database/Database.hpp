@@ -200,7 +200,7 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
     File.get_info(start, 2);
     if (total == 0)
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalidgg\n");
     }
 
     Block<valueType> tmp;
@@ -233,9 +233,9 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
     }
     if (!flag) // 查找失败
     {
-        throw std::runtime_error("Invalid\n");
+        throw std::runtime_error("Invalidplk\n");
     }
-    throw std::logic_error("Invalid\n");
+    throw std::logic_error("Invalidkbh\n");
 }
 
 template <typename valueType>

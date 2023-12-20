@@ -63,7 +63,7 @@ double Book::buy(char *ISBN, int quantity)
         throw std::runtime_error("Invalid\n");
     }
 
-    book = books_ISBN.Find(blk1); // 取值成功
+    book = books_ISBN.Find(blk1); // 取值成功 同一个ISBN仅有一本书
     if (quantity <= 0 || book.quantity < quantity)
     {
         throw std::runtime_error("Invalid\n");

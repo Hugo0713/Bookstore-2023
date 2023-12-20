@@ -65,6 +65,10 @@ void Account::signup(char *id, char *passward, char *username)
     user.Privilege = 1;
     Block<Account> curBlock(id, user);
     users.Insert(curBlock);
+    if(users.ifFind(curBlock))
+    {
+        std::cout <<"shsh";
+    }
 }
 
 void Account::modify(char *ID, char *Cur_Passward, char *New_Passward)

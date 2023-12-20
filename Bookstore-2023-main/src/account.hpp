@@ -26,7 +26,7 @@ public:
     
     bool operator==(const Account &obj) const 
     {
-        if(ID == obj.ID && Passward == obj.Passward && Username == obj.Username && Privilege == obj.Privilege)
+        if(strcmp(ID, obj.ID) == 0 && strcmp(Passward, obj.Passward) == 0 && strcmp(Username, obj.Username) == 0 && Privilege == obj.Privilege && status == status)
         {
             return true;
         }
@@ -36,7 +36,7 @@ public:
     {
         if(Privilege != obj.Privilege)
         {
-            return ID < obj.ID;
+            return (strcmp(ID, obj.ID) < 0);
         }
         return Privilege < obj.Privilege;
     }
