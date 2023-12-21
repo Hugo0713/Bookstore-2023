@@ -3,9 +3,10 @@
 
 #include <iostream>
 #include "Account.hpp"
-//#include "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
+#include "Log.hpp"
+// #include "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/Database/Database.hpp"
 
-//class Account;
+// class Account;
 class Book
 {
 private:
@@ -22,12 +23,36 @@ public:
 
     bool operator==(const Book &obj) const
     {
-        return (strcmp(ISBN, obj.ISBN) == 0);
+        return (strcmp(ISBN, obj.ISBN) == 0 && strcmp(BookName, obj.BookName) == 0 && strcmp(Author, obj.Author) == 0 && strcmp(Keyword, obj.Keyword) == 0 && quantity == obj.quantity && Price == obj.Price);
     }
     bool operator<(const Book &obj) const
     {
-        return (strcmp(ISBN, obj.ISBN) < 0);
+        if (strcmp(ISBN, obj.ISBN) != 0)
+        {
+            return (strcmp(ISBN, obj.ISBN) < 0);
+        }
+        else if (strcmp(BookName, obj.BookName) != 0)
+        {
+            return (strcmp(BookName, obj.BookName) < 0);
+        }
+        else if (strcmp(Author, obj.Author) != 0)
+        {
+            return (strcmp(Author, obj.Author) < 0);
+        }
+        else if (strcmp(Keyword, obj.Keyword) != 0)
+        {
+            return (strcmp(Keyword, obj.Keyword) < 0);
+        }
+        else if (quantity != obj.quantity)
+        {
+            return (quantity < obj.quantity);
+        }
+        else
+        {
+            return (Price < obj.Price);
+        }
     }
+
     Book &operator=(const Book &obj)
     {
         if (this == &obj)
@@ -83,4 +108,5 @@ static Database<Book> books_Name("File_Name");
 static Database<Book> books_Author("File_Author");
 static Database<Book> books_Keyword("File_Keyword");
 extern std::vector<Account> login_stack;
+
 #endif

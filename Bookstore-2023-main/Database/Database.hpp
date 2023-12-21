@@ -38,6 +38,8 @@ public:
 
     void showFind(Block<valueType> &blk);
 
+    void showAll();
+
     void Delete(Block<valueType> &blk);
 };
 
@@ -206,7 +208,7 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
     Block<valueType> tmp;
     bool nextOne = true; // 循环控制
     bool flag = false;   // 查找判断
-    while (nextOne)
+    while (true)
     {
         File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
         File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
@@ -219,11 +221,11 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
                 flag = true;
                 return block_value[i].value;
             }
-            else
-            {
-                nextOne = false;
-                break;
-            }
+            // else
+            // {
+            //     nextOne = false;
+            //     break;
+            // }
         }
         target = tmp.nextBlock; // 更新为下一索引
         if (target == 0)
@@ -233,7 +235,7 @@ valueType &Database<valueType>::Find(Block<valueType> &blk)
     }
     if (!flag) // 查找失败
     {
-        throw std::runtime_error("Invalidplk\n");
+        throw std::runtime_error("Invalid???\n");
     }
     throw std::logic_error("Invalidkbh\n");
 }
@@ -283,6 +285,28 @@ void Database<valueType>::showFind(Block<valueType> &blk)
         throw std::runtime_error("Invalid\n");
     }
     throw std::logic_error("Invalid\n");
+}
+
+template <typename valueType>
+void Database<valueType>::showAll()
+{
+    int total, start;
+    File.get_info(total, 1);
+    File.get_info(start, 2);
+
+    // 循环遍历每个索引块
+    for (int target = start; target != 0; target = block_index[target].nextBlock)
+    {
+        Block<valueType> tmp;
+        File.read(tmp, 12 + (target - 1) * SIZE, 1);                    // 读取目标索引块
+        File.read(block_value[1], 12 + tmp.idx * MAX * SIZE, tmp.size); // 读取目标值块
+
+        // 打印值块中的每个记录
+        for (int i = 1; i <= tmp.size; ++i)
+        {
+            std::cout << block_value[i].value << "\n";
+        }
+    }
 }
 
 template <typename valueType>

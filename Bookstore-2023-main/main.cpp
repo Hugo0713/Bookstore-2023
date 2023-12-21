@@ -4,17 +4,18 @@
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 std::vector<Account> login_stack;
+Log logg("File_finance");
 
-bool check(int k, const std::string token[])//恰好k个切片
+bool check(int k, const std::string token[]) // 恰好k个切片
 {
-    for(int i = 2; i < 2 + k; ++i)
+    for (int i = 2; i < 2 + k; ++i)
     {
-        if(token[i] == "")
+        if (token[i] == "")
         {
             return false;
         }
     }
-    if(token[k + 2] != "")
+    if (token[k + 2] != "")
     {
         return false;
     }
@@ -25,7 +26,7 @@ void processLine(std::string line, Account &user, Book &book)
 {
     TokenScanner scanner;
     scanner.ignoreWhitespace();
-    //scanner.scanNumbers();
+    // scanner.scanNumbers();
     scanner.setInput(line);
     std::string token[20]{};
     int i = 1;
@@ -61,7 +62,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "su")
     {
-        if(!check(2, token) && !check(1, token))
+        if (!check(2, token) && !check(1, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -75,7 +76,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "register")
     {
-        if(!check(3, token))
+        if (!check(3, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -84,7 +85,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "passwd")
     {
-        if(!check(3, token) && !check(2, token))
+        if (!check(3, token) && !check(2, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -93,7 +94,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "useradd")
     {
-        if(!check(4, token))
+        if (!check(4, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -102,7 +103,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "delete")
     {
-        if(!check(1, token))
+        if (!check(1, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -112,7 +113,7 @@ void processLine(std::string line, Account &user, Book &book)
 
     if (token[1] == "show" && token[2] != "finance")
     {
-        if(!check(2, token))
+        if (!check(2, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -140,7 +141,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "buy")
     {
-        if(!check(2, token))
+        if (!check(2, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -149,7 +150,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "select")
     {
-        if(!check(1, token))
+        if (!check(1, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -158,7 +159,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "modify")
     {
-        if(!check(2, token) && !check(4, token) && !check(6, token) && !check(8, token) && !check(10, token))
+        if (!check(2, token) && !check(4, token) && !check(6, token) && !check(8, token) && !check(10, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -188,9 +189,9 @@ void processLine(std::string line, Account &user, Book &book)
             }
             j += 2;
         }
-        //重复附加参数 keyword包含重复信息？
+        // 重复附加参数 keyword包含重复信息？
         double value;
-        if(tmp[4] == "")
+        if (tmp[4] == "")
         {
             value = 0.0;
         }
@@ -203,7 +204,7 @@ void processLine(std::string line, Account &user, Book &book)
     }
     if (token[1] == "import")
     {
-        if(!check(2, token))
+        if (!check(2, token))
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -213,10 +214,25 @@ void processLine(std::string line, Account &user, Book &book)
 
     if (token[1] == "show" && token[2] == "finance")
     {
+        if (token[3] == "")
+        {
+            logg.show_finance(0);
+        }
+        else
+        {
+            if (stoi(token[3]) == 0)
+            {
+                std::cout << "\n";
+            }
+            else
+            {
+                logg.show_finance(stoi(token[3]));
+            }
+        }
         flag = true;
     }
 
-    if(!flag)
+    if (!flag)
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -224,7 +240,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
-    //std::freopen("output.txt", "w", stdout);
+    // std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
     Account::setroot();
