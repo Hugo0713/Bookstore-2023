@@ -111,7 +111,7 @@ void Database<valueType>::Insert(Block<valueType> &blk)
         File.write(blk, 12 + MAX * SIZE, 1); // 值块写入
         return;
     }
-    if(start == 0)
+    if (start == 0)
     {
         ++start;
         File.write_info(start, 2);
@@ -271,7 +271,7 @@ void Database<valueType>::showFind(Block<valueType> &blk)
             if (strcmp(block_value[i].index, blk.index) == 0) // 匹配
             {
                 flag = true;
-                std::cout << block_value[i].value;
+                std::cout << block_value[i].value << "\n";
             }
             else
             {
@@ -289,7 +289,6 @@ void Database<valueType>::showFind(Block<valueType> &blk)
     {
         throw std::runtime_error("Invalid\n");
     }
-    throw std::logic_error("Invalid\n");
 }
 
 template <typename valueType>
@@ -343,7 +342,7 @@ void Database<valueType>::Delete(Block<valueType> &blk)
     }
 
     File.get_info(start, 2); // 更新目标索引块
-    
+
     --tmp.size;
     File.write(tmp, 12 + (target - 1) * SIZE, 1);
     if (tmp.size == 0) // 若目标索引块无值块

@@ -51,7 +51,7 @@ void processLine(std::string line, Account &user, Book &book)
     // int j = 1;
     // while(token[j] != "")
     // {
-    //     std::cout << token[j] << " " << j ;
+    //     std::cout << token[j] << " " << j << " ";
     //     ++j;
     // }
 
@@ -113,9 +113,9 @@ void processLine(std::string line, Account &user, Book &book)
 
     if (token[1] == "show" && token[2] != "finance")
     {
-        if (!check(2, token))
+        if (!check(2, token) && !check(0, token))
         {
-            throw std::runtime_error("Invalid\n");
+            throw std::runtime_error("Invalid2\n");
         }
         if (token[2] == "ISBN")
         {

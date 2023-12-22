@@ -14,11 +14,11 @@ private:
     char BookName[61];
     char Author[61];
     char Keyword[61];
+    //std::vector<std::string> Keyword;
     int quantity;
     double Price;
 
 public:
-    bool ifselected = false;
     Book() : ISBN{}, BookName{}, Author{}, Keyword{}, quantity(0), Price(0.0) {}
 
     bool operator==(const Book &obj) const
@@ -65,13 +65,13 @@ public:
         strncpy(Keyword, obj.Keyword, sizeof(Keyword));
         quantity = obj.quantity;
         Price = obj.Price;
-        ifselected = obj.ifselected;
         return *this;
     }
 
     friend std::ostream &operator<<(std::ostream &out, const Book &obj)
     {
-        out << obj.ISBN << "\t" << obj.BookName << "\t" << obj.Keyword << "\t" << obj.Price << "\t" << obj.quantity << "\n";
+        std::cout << std::fixed << std::setprecision(2);
+        out << obj.ISBN << "\t" << obj.BookName << "\t" << obj.Author << "\t" << obj.Keyword << "\t" << obj.Price << "\t" << obj.quantity;
         return out;
     }
 

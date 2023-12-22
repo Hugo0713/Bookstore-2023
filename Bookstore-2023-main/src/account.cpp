@@ -45,9 +45,7 @@ void Account::logout()
     if (!login_stack.empty())
     {
         login_stack.back().status = false;
-        // Book book;
-        // strncpy(login_stack.back().selected, book.getISBN(), sizeof(login_stack.back().selected)); // 选择为空
-        // login_stack.back().selected.ifselected = false;
+        strncpy(login_stack.back().selected, "", sizeof(login_stack.back().selected));
         login_stack.pop_back();
     }
     else
