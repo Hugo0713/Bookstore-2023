@@ -111,6 +111,11 @@ void Database<valueType>::Insert(Block<valueType> &blk)
         File.write(blk, 12 + MAX * SIZE, 1); // 值块写入
         return;
     }
+    if(start == 0)
+    {
+        ++start;
+        File.write_info(start, 2);
+    }
     Block<valueType> pre, now;
     int target = index_find(blk);
     File.read(pre, 12 + (target - 1) * SIZE, 1);                                                                            // 读取索引块
@@ -338,6 +343,7 @@ void Database<valueType>::Delete(Block<valueType> &blk)
     }
 
     File.get_info(start, 2); // 更新目标索引块
+    
     --tmp.size;
     File.write(tmp, 12 + (target - 1) * SIZE, 1);
     if (tmp.size == 0) // 若目标索引块无值块
