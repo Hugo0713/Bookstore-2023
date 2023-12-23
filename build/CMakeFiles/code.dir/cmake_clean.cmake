@@ -7,10 +7,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/code.dir/Bookstore-2023-main/Utils/tokenScanner.cpp.o.d"
   "CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o"
   "CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o.d"
-  "CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o"
-  "CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o.d"
   "CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o"
   "CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o.d"
+  "CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o"
+  "CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o.d"
   "code"
   "code.pdb"
 )

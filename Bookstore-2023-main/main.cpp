@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Utils/tokenScanner.hpp"
-//#include "src/Account.hpp"
+// #include "src/Account.hpp"
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 std::vector<Account> login_stack;
@@ -84,7 +84,7 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
-        if(token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
+        if (token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -97,7 +97,7 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
-        if(token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
+        if (token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -114,12 +114,21 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        int p = stoi(token[4]);
+        if (p != 1 && p != 3 && p != 7)
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.useradd(token[2].data(), token[3].data(), stoi(token[4]), token[5].data());
         flag = true;
     }
     if (token[1] == "delete")
     {
         if (!check(1, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
+        if (token[1].length() > 30)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -133,8 +142,16 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid2\n");
         }
+        if (token[3].length() > 60)
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         if (token[2] == "ISBN")
         {
+            if (token[3].length() > 20)
+            {
+                throw std::runtime_error("Invalid\n");
+            }
             book.show_ISBN(token[3].data());
         }
         if (token[2] == "name")
@@ -161,12 +178,20 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        if (token[2].length() > 20 || !isdigit(token[3][0]))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         book.buy(token[2].data(), stoi(token[3]));
         flag = true;
     }
     if (token[1] == "select")
     {
         if (!check(1, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
+        if (token[2].length() > 20)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -207,6 +232,10 @@ void processLine(std::string line, Account &user, Book &book)
         }
         // 重复附加参数 keyword包含重复信息？
         double value;
+        if (!isdigit(tmp[4][0]) && tmp[4] != "")
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         if (tmp[4] == "")
         {
             value = 0.0;
@@ -214,6 +243,17 @@ void processLine(std::string line, Account &user, Book &book)
         else
         {
             value = stod(tmp[4]);
+        }
+        if (tmp[0].length() > 20 && tmp[0] != "")
+        {
+            throw std::runtime_error("Invalid\n");
+        }
+        for (int m = 1; m < 4; ++m)
+        {
+            if (tmp[m].length() > 60 && tmp[m] != "")
+            {
+                throw std::runtime_error("Invalid\n");
+            }
         }
         book.modify(tmp[0].data(), tmp[1].data(), tmp[2].data(), tmp[3].data(), value);
         flag = true;
@@ -234,6 +274,10 @@ void processLine(std::string line, Account &user, Book &book)
 
     if (token[1] == "show" && token[2] == "finance")
     {
+        if (!isdigit(token[3][0]))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         if (token[3] == "")
         {
             logg.show_finance(0);

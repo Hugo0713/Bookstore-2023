@@ -77,7 +77,7 @@ void Book::show_keyword(char *index)
 
 void Book::show_all()
 {
-    if(login_stack.empty())
+    if (login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -191,8 +191,8 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         throw std::runtime_error("Invalid\n");
     }
 
-    Block<Book> f(isbn);// isbn不能改成已有的isbn
-    if (books_ISBN.ifFind(f)) 
+    Block<Book> f(isbn); // isbn不能改成已有的isbn
+    if (books_ISBN.ifFind(f))
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -218,7 +218,6 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         blk_key[k].value = book;
     }
 
-    
     std::string str1(keyword); // 分割keyword，为空也没关系
     std::stringstream ss1(str1);
     std::vector<std::string> vec1;
@@ -230,29 +229,28 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
     Block<Book> blk_key1[60];
     for (int k = 0; k < vec1.size(); ++k)
     {
-        for(int j = 0; j < vec1.size(); ++j)//检查重复信息段
+        for (int j = 0; j < vec1.size(); ++j) // 检查重复信息段
         {
-            if(j != k && vec1[k] == vec1[j])
+            if (j != k && vec1[k] == vec1[j])
             {
                 throw std::runtime_error("Invalid\n");
             }
         }
         strncpy(blk_key1[k].index, vec1[k].data(), sizeof(blk_key1[k].index));
     }
-    //确定没有重复信息段才能删除
-    //删除键值对后改键
+    // 确定没有重复信息段才能删除
+    // 删除键值对后改键
     books_ISBN.Delete(blk1);
     if (isbn[0] != '\0') // 改ISBN
     {
         strncpy(blk1.index, isbn, sizeof(blk1.index));
-        for(std::size_t i = 0; i < login_stack.size(); ++i)
+        for (std::size_t i = 0; i < login_stack.size(); ++i)
         {
-            if(strcmp(login_stack[i].selected, book.ISBN) == 0)
+            if (strcmp(login_stack[i].selected, book.ISBN) == 0)
             {
                 strncpy(login_stack[i].selected, isbn, sizeof(login_stack[i].selected));
             }
         }
-        
     }
 
     if (cur.BookName[0] != '\0') // 不是新书
@@ -273,16 +271,15 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         strncpy(blk3.index, author, sizeof(blk3.index));
     }
 
-
     if (cur.Keyword[0] != '\0')
     {
         for (int k = 0; k < vec.size(); ++k)
         {
-            books_Keyword.Delete(blk_key[k]); //删除所有keyword的键值对
+            books_Keyword.Delete(blk_key[k]); // 删除所有keyword的键值对
         }
     }
     // 修改cur
-    if (isbn[0] != '\0') 
+    if (isbn[0] != '\0')
     {
         strncpy(cur.ISBN, isbn, sizeof(cur.ISBN));
     }
@@ -304,8 +301,8 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
     }
 
     blk1.value = blk2.value = blk3.value = cur; // 更新值
-    //重新插入键值对进入各个数据库
-    //对于keyword数据库要按所有keyword插入
+    // 重新插入键值对进入各个数据库
+    // 对于keyword数据库要按所有keyword插入
     if (blk1.index[0] != '\0')
     {
         books_ISBN.Insert(blk1);
@@ -319,17 +316,17 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         books_Author.Insert(blk3);
     }
 
-    for (int k = 0; k < vec1.size(); ++k)//改变了关键词用改后的关键词插入
+    for (int k = 0; k < vec1.size(); ++k) // 改变了关键词用改后的关键词插入
     {
-        if(blk_key1[k].index[0] != '\0')
+        if (blk_key1[k].index[0] != '\0')
         {
             blk_key1[k].value = cur;
             books_Keyword.Insert(blk_key1[k]);
         }
     }
-    for(int k = 0; k < vec.size(); ++k)//没有改变关键词用原来的关键词插入
+    for (int k = 0; k < vec.size(); ++k) // 没有改变关键词用原来的关键词插入
     {
-        if(keyword[0] == '\0')
+        if (keyword[0] == '\0')
         {
             blk_key[k].value = cur;
             books_Keyword.Insert(blk_key[k]);

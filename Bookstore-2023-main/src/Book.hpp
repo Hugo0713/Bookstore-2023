@@ -14,7 +14,7 @@ private:
     char BookName[61];
     char Author[61];
     char Keyword[61];
-    //std::vector<std::string> Keyword;
+    // std::vector<std::string> Keyword;
     int quantity;
     double Price;
 

@@ -225,30 +225,6 @@ Bookstore-2023-main/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.s
 .PHONY : Bookstore-2023-main/main.cpp.s
 
-Bookstore-2023-main/src/Account.o: Bookstore-2023-main/src/Account.cpp.o
-.PHONY : Bookstore-2023-main/src/Account.o
-
-# target to build an object file
-Bookstore-2023-main/src/Account.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o
-.PHONY : Bookstore-2023-main/src/Account.cpp.o
-
-Bookstore-2023-main/src/Account.i: Bookstore-2023-main/src/Account.cpp.i
-.PHONY : Bookstore-2023-main/src/Account.i
-
-# target to preprocess a source file
-Bookstore-2023-main/src/Account.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.i
-.PHONY : Bookstore-2023-main/src/Account.cpp.i
-
-Bookstore-2023-main/src/Account.s: Bookstore-2023-main/src/Account.cpp.s
-.PHONY : Bookstore-2023-main/src/Account.s
-
-# target to generate assembly for a file
-Bookstore-2023-main/src/Account.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.s
-.PHONY : Bookstore-2023-main/src/Account.cpp.s
-
 Bookstore-2023-main/src/Book.o: Bookstore-2023-main/src/Book.cpp.o
 .PHONY : Bookstore-2023-main/src/Book.o
 
@@ -273,6 +249,30 @@ Bookstore-2023-main/src/Book.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.s
 .PHONY : Bookstore-2023-main/src/Book.cpp.s
 
+Bookstore-2023-main/src/account.o: Bookstore-2023-main/src/account.cpp.o
+.PHONY : Bookstore-2023-main/src/account.o
+
+# target to build an object file
+Bookstore-2023-main/src/account.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o
+.PHONY : Bookstore-2023-main/src/account.cpp.o
+
+Bookstore-2023-main/src/account.i: Bookstore-2023-main/src/account.cpp.i
+.PHONY : Bookstore-2023-main/src/account.i
+
+# target to preprocess a source file
+Bookstore-2023-main/src/account.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.i
+.PHONY : Bookstore-2023-main/src/account.cpp.i
+
+Bookstore-2023-main/src/account.s: Bookstore-2023-main/src/account.cpp.s
+.PHONY : Bookstore-2023-main/src/account.s
+
+# target to generate assembly for a file
+Bookstore-2023-main/src/account.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/code.dir/build.make CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.s
+.PHONY : Bookstore-2023-main/src/account.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -294,12 +294,12 @@ help:
 	@echo "... Bookstore-2023-main/main.o"
 	@echo "... Bookstore-2023-main/main.i"
 	@echo "... Bookstore-2023-main/main.s"
-	@echo "... Bookstore-2023-main/src/Account.o"
-	@echo "... Bookstore-2023-main/src/Account.i"
-	@echo "... Bookstore-2023-main/src/Account.s"
 	@echo "... Bookstore-2023-main/src/Book.o"
 	@echo "... Bookstore-2023-main/src/Book.i"
 	@echo "... Bookstore-2023-main/src/Book.s"
+	@echo "... Bookstore-2023-main/src/account.o"
+	@echo "... Bookstore-2023-main/src/account.i"
+	@echo "... Bookstore-2023-main/src/account.s"
 .PHONY : help
 
 

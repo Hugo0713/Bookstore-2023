@@ -4,12 +4,12 @@
 #include <fstream>
 #include <unistd.h>
 
-using std::string;
 using std::fstream;
 using std::ifstream;
 using std::ofstream;
+using std::string;
 
-template<class T, int info_len>
+template <class T, int info_len>
 class MemoryRiver
 {
 private:
@@ -77,5 +77,4 @@ public:
     }
 };
 
-
-#endif //BPT_MEMORYRIVER_HPP
+#endif // BPT_MEMORYRIVER_HPP

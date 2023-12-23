@@ -83,19 +83,19 @@ CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/main.cpp" -o CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.s
 
-CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: CMakeFiles/code.dir/flags.make
-CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: ../Bookstore-2023-main/src/Account.cpp
-CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o: CMakeFiles/code.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/x/VS code/big work/Bookstore-2023-main/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o -MF CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o.d -o CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o -c "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/Account.cpp"
+CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o: CMakeFiles/code.dir/flags.make
+CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o: ../Bookstore-2023-main/src/account.cpp
+CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o: CMakeFiles/code.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/x/VS code/big work/Bookstore-2023-main/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o -MF CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o.d -o CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o -c "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/account.cpp"
 
-CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/Account.cpp" > CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.i
+CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/account.cpp" > CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.i
 
-CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/Account.cpp" -o CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.s
+CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/src/account.cpp" -o CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.s
 
 CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o: CMakeFiles/code.dir/flags.make
 CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o: ../Bookstore-2023-main/src/Book.cpp
@@ -156,7 +156,7 @@ CMakeFiles/code.dir/Bookstore-2023-main/Utils/tokenScanner.cpp.s: cmake_force
 # Object files for target code
 code_OBJECTS = \
 "CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o" \
-"CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o" \
+"CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o" \
 "CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o" \
 "CMakeFiles/code.dir/Bookstore-2023-main/Utils/error.cpp.o" \
 "CMakeFiles/code.dir/Bookstore-2023-main/Utils/strlib.cpp.o" \
@@ -166,7 +166,7 @@ code_OBJECTS = \
 code_EXTERNAL_OBJECTS =
 
 code: CMakeFiles/code.dir/Bookstore-2023-main/main.cpp.o
-code: CMakeFiles/code.dir/Bookstore-2023-main/src/Account.cpp.o
+code: CMakeFiles/code.dir/Bookstore-2023-main/src/account.cpp.o
 code: CMakeFiles/code.dir/Bookstore-2023-main/src/Book.cpp.o
 code: CMakeFiles/code.dir/Bookstore-2023-main/Utils/error.cpp.o
 code: CMakeFiles/code.dir/Bookstore-2023-main/Utils/strlib.cpp.o

@@ -9,7 +9,7 @@ int Account::getPrivilege()
 void Account::setroot()
 {
     Block<Account> tmp("root");
-    if(!users.ifFind(tmp))
+    if (!users.ifFind(tmp))
     {
         Account root;
         strcpy(root.ID, "root");
@@ -23,10 +23,10 @@ void Account::setroot()
 
 void Account::login(char *id, char *Passward)
 {
-    Account user;                 // 空对象
+    Account user;           // 空对象
     Block<Account> blk(id); // 键插入
 
-    if (!users.ifFind(blk))       // 查找键
+    if (!users.ifFind(blk)) // 查找键
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -87,19 +87,19 @@ void Account::modify(char *id, char *Cur_Passward, char *New_Passward)
         throw std::runtime_error("Invalid\n");
     }
     user = users.Find(blk);
-    if (New_Passward[0] == '\0' && login_stack.back().getPrivilege() != 7)//若省略cur，传入参数new为空
+    if (New_Passward[0] == '\0' && login_stack.back().getPrivilege() != 7) // 若省略cur，传入参数new为空
     {
-        throw std::runtime_error("Invalid\n");//省略不合法
+        throw std::runtime_error("Invalid\n"); // 省略不合法
     }
-    if (New_Passward[0] != '\0' && strcmp(Cur_Passward, user.Passward) != 0)//完全传参，原密码错误
+    if (New_Passward[0] != '\0' && strcmp(Cur_Passward, user.Passward) != 0) // 完全传参，原密码错误
     {
         throw std::runtime_error("Invalid\n");
     }
     Block<Account> curBlock(id, user);
     users.Delete(curBlock);
-    if(New_Passward[0] == '\0' && login_stack.back().getPrivilege() == 7)//参数cur为改的密码
+    if (New_Passward[0] == '\0' && login_stack.back().getPrivilege() == 7) // 参数cur为改的密码
     {
-        if(strcmp(Cur_Passward, user.Passward) == 0)
+        if (strcmp(Cur_Passward, user.Passward) == 0)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -107,7 +107,7 @@ void Account::modify(char *id, char *Cur_Passward, char *New_Passward)
     }
     else
     {
-        if(strcmp(New_Passward, user.Passward) == 0)
+        if (strcmp(New_Passward, user.Passward) == 0)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -133,7 +133,7 @@ void Account::useradd(char *id, char *passward, int privilege, char *username)
     strncpy(user.Passward, passward, sizeof(Passward));
     strncpy(user.Username, username, sizeof(Username));
     user.Privilege = privilege;
-    Block<Account> curBlock(id, user); //将ID改为id，细节决定成败！
+    Block<Account> curBlock(id, user); // 将ID改为id，细节决定成败！
     users.Insert(curBlock);
 }
 
