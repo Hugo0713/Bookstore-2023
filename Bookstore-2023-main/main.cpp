@@ -304,6 +304,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
+    //std::freopen("/mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/bookstore-testcases/complex/testcase1/1.in", "r", stdin);
     //std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
