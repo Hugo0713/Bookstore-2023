@@ -1,11 +1,7 @@
-requirements.md
 /bookstore-testcases
-/code
-/run
 /.vscode
-/test
-//mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/bookstore-testcases
-//mnt/x/VS code/big work/Bookstore-2023-main/Bookstore-2023-main/test
-//mnt/x/VS code/big work/Bookstore-2023-main/build
-//mnt/x/VS code/big work/Bookstore-2023-main/cmake-build-debug
-//mnt/x/VS code/big work/Bookstore-2023-main/bookstore-testcases
+/cmake-build-debug
+/build
+/.idea
+test/
+bookstore-testcases/
