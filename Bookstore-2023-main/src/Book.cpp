@@ -319,7 +319,7 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         books_Author.Insert(blk3);
     }
 
-    for (int k = 0; k < vec1.size(); ++k)
+    for (int k = 0; k < vec1.size(); ++k)//改变了关键词用改后的关键词插入
     {
         if(blk_key1[k].index[0] != '\0')
         {
@@ -327,7 +327,7 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
             books_Keyword.Insert(blk_key1[k]);
         }
     }
-    for(int k = 0; k < vec.size(); ++k)
+    for(int k = 0; k < vec.size(); ++k)//没有改变关键词用原来的关键词插入
     {
         if(keyword[0] == '\0')
         {

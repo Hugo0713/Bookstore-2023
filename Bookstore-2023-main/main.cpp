@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Utils/tokenScanner.hpp"
-// #include"src/Account.hpp"
+#include "src/Account.hpp"
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 std::vector<Account> login_stack;
@@ -244,7 +244,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
-    //std::freopen("output.txt", "w", stdout);
+    // std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
     Account::setroot();
