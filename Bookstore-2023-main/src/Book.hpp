@@ -97,7 +97,7 @@ public:
     void show_author(char *index);
     void show_keyword(char *index);
     void show_all();
-    double buy(char *ISBN, int quantity);
+    void buy(char *ISBN, int quantity);
     void select(char *ISBN);
     void modify(char *isbn, char *bookname, char *author, char *keyword, double price);
     void import(int quantity, double Totalcost);

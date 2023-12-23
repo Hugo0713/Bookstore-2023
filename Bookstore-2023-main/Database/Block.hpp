@@ -11,7 +11,7 @@ public:
     int size;        // 索引块对应值块个数
     int nextBlock;   // 索引块后继索引->
     int idx;         // 索引块：值块位置
-    char index[31];  // 键 ID:31 ISBN:21
+    char index[61];  // 键 ID:31 ISBN:21
 
     Block() : value(), size(0), nextBlock(0), idx(0), index{} {}
 

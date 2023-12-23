@@ -8,13 +8,17 @@ int Account::getPrivilege()
 
 void Account::setroot()
 {
-    Account root;
-    strcpy(root.ID, "root");
-    strcpy(root.Passward, "sjtu");
-    strcpy(root.Username, "root");
-    root.Privilege = 7;
-    Block<Account> blk("root", root);
-    users.Insert(blk);
+    Block<Account> tmp("root");
+    if(!users.ifFind(tmp))
+    {
+        Account root;
+        strcpy(root.ID, "root");
+        strcpy(root.Passward, "sjtu");
+        strcpy(root.Username, "root");
+        root.Privilege = 7;
+        Block<Account> blk("root", root);
+        users.Insert(blk);
+    }
 }
 
 void Account::login(char *id, char *Passward)
@@ -32,7 +36,7 @@ void Account::login(char *id, char *Passward)
     {
         throw std::runtime_error("Invalid\n");
     }
-    if (strcmp(Passward, user.Passward) != 0)
+    if (Passward[0] != '\0' && strcmp(Passward, user.Passward) != 0)
     {
         throw std::runtime_error("Invalid\n");
     }

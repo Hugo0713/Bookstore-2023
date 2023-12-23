@@ -5,7 +5,7 @@
 
 void Book::show_ISBN(char *index)
 {
-    if (index[0] == '\0')
+    if (index[0] == '\0' || login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -23,7 +23,7 @@ void Book::show_ISBN(char *index)
 
 void Book::show_name(char *index)
 {
-    if (index[0] == '\0')
+    if (index[0] == '\0' || login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -41,7 +41,7 @@ void Book::show_name(char *index)
 
 void Book::show_author(char *index)
 {
-    if (index[0] == '\0')
+    if (index[0] == '\0' || login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -59,7 +59,7 @@ void Book::show_author(char *index)
 
 void Book::show_keyword(char *index)
 {
-    if (index[0] == '\0')
+    if (index[0] == '\0' || login_stack.empty())
     {
         throw std::runtime_error("Invalid\n");
     }
@@ -77,10 +77,14 @@ void Book::show_keyword(char *index)
 
 void Book::show_all()
 {
+    if(login_stack.empty())
+    {
+        throw std::runtime_error("Invalid\n");
+    }
     books_ISBN.showAll();
 }
 
-double Book::buy(char *isbn, int quantity)
+void Book::buy(char *isbn, int quantity)
 {
     if (login_stack.empty())
     {
@@ -140,10 +144,14 @@ double Book::buy(char *isbn, int quantity)
     int total;
     logg.File_finance.get_info(total, 1);
     logg.File_finance.write(money, 4 + sizeof(double) * total, 1);
+    // double hhh;
+    // logg.File_finance.read(hhh, 4 + sizeof(double) * total, 1);
+    // std::cout << hhh << "\n";
     ++total;
     logg.File_finance.write_info(total, 1);
 
-    return money;
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << money << "\n";
 }
 
 void Book::select(char *isbn)
@@ -211,12 +219,40 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
     }
 
     
+    std::string str1(keyword); // 分割keyword，为空也没关系
+    std::stringstream ss1(str1);
+    std::vector<std::string> vec1;
+    std::string temp1;
+    while (std::getline(ss1, temp1, '|'))
+    {
+        vec1.push_back(temp1);
+    }
+    Block<Book> blk_key1[60];
+    for (int k = 0; k < vec1.size(); ++k)
+    {
+        for(int j = 0; j < vec1.size(); ++j)//检查重复信息段
+        {
+            if(j != k && vec1[k] == vec1[j])
+            {
+                throw std::runtime_error("Invalid\n");
+            }
+        }
+        strncpy(blk_key1[k].index, vec1[k].data(), sizeof(blk_key1[k].index));
+    }
+    //确定没有重复信息段才能删除
     //删除键值对后改键
     books_ISBN.Delete(blk1);
     if (isbn[0] != '\0') // 改ISBN
     {
         strncpy(blk1.index, isbn, sizeof(blk1.index));
-        strncpy(login_stack.back().selected, isbn, sizeof(login_stack.back().selected));
+        for(std::size_t i = 0; i < login_stack.size(); ++i)
+        {
+            if(strcmp(login_stack[i].selected, book.ISBN) == 0)
+            {
+                strncpy(login_stack[i].selected, isbn, sizeof(login_stack[i].selected));
+            }
+        }
+        
     }
 
     if (cur.BookName[0] != '\0') // 不是新书
@@ -237,26 +273,13 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
         strncpy(blk3.index, author, sizeof(blk3.index));
     }
 
+
     if (cur.Keyword[0] != '\0')
     {
         for (int k = 0; k < vec.size(); ++k)
         {
             books_Keyword.Delete(blk_key[k]); //删除所有keyword的键值对
         }
-    }
-    
-    std::string str1(keyword); // 分割keyword，为空也没关系
-    std::stringstream ss1(str1);
-    std::vector<std::string> vec1;
-    std::string temp1;
-    while (std::getline(ss1, temp1, '|'))
-    {
-        vec1.push_back(temp1);
-    }
-    Block<Book> blk_key1[60];
-    for (int k = 0; k < vec1.size(); ++k)
-    {
-        strncpy(blk_key1[k].index, vec1[k].data(), sizeof(blk_key1[k].index));
     }
     // 修改cur
     if (isbn[0] != '\0') 
@@ -295,12 +318,21 @@ void Book::modify(char *isbn, char *bookname, char *author, char *keyword, doubl
     {
         books_Author.Insert(blk3);
     }
+
     for (int k = 0; k < vec1.size(); ++k)
     {
         if(blk_key1[k].index[0] != '\0')
         {
             blk_key1[k].value = cur;
             books_Keyword.Insert(blk_key1[k]);
+        }
+    }
+    for(int k = 0; k < vec.size(); ++k)
+    {
+        if(keyword[0] == '\0')
+        {
+            blk_key[k].value = cur;
+            books_Keyword.Insert(blk_key[k]);
         }
     }
 }

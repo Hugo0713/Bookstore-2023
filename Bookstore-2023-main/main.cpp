@@ -51,7 +51,7 @@ void processLine(std::string line, Account &user, Book &book)
     // int j = 1;
     // while(token[j] != "")
     // {
-    //     std::cout << token[j] << " " << j << " ";
+    //     std::cout << token[j] << " " << j << " " << "\n";
     //     ++j;
     // }
 
@@ -208,6 +208,10 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        if (!isdigit(token[2][0]) || !isdigit(token[3][0]))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         book.import(stoi(token[2]), stod(token[3]));
         flag = true;
     }
@@ -240,7 +244,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
-    // std::freopen("output.txt", "w", stdout);
+    //std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
     Account::setroot();
