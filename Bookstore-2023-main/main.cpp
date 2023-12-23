@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Utils/tokenScanner.hpp"
-#include "src/Account.hpp"
+//#include "src/Account.hpp"
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 std::vector<Account> login_stack;
@@ -66,6 +66,10 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        if (token[2].length() > 30 || token[3].length() > 30)
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         Account::login(token[2].data(), token[3].data());
         flag = true;
     }
@@ -80,6 +84,10 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        if(token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.signup(token[2].data(), token[3].data(), token[4].data());
         flag = true;
     }
@@ -89,12 +97,20 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
+        if(token[2].length() > 30 || token[3].length() > 30 || token[4].length() > 30)
+        {
+            throw std::runtime_error("Invalid\n");
+        }
         user.modify(token[2].data(), token[3].data(), token[4].data());
         flag = true;
     }
     if (token[1] == "useradd")
     {
         if (!check(4, token))
+        {
+            throw std::runtime_error("Invalid\n");
+        }
+        if (token[2].length() > 30 || token[3].length() > 30 || !isdigit(token[4][0]) || token[5].length() > 30)
         {
             throw std::runtime_error("Invalid\n");
         }
