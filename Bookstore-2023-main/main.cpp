@@ -128,7 +128,7 @@ void processLine(std::string line, Account &user, Book &book)
         {
             throw std::runtime_error("Invalid\n");
         }
-        if (token[1].length() > 30)
+        if (token[2].length() > 30)
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -274,7 +274,7 @@ void processLine(std::string line, Account &user, Book &book)
 
     if (token[1] == "show" && token[2] == "finance")
     {
-        if (!isdigit(token[3][0]))
+        if (!isdigit(token[3][0]) && token[3] != "")
         {
             throw std::runtime_error("Invalid\n");
         }
@@ -304,7 +304,7 @@ void processLine(std::string line, Account &user, Book &book)
 
 int main()
 {
-    // std::freopen("output.txt", "w", stdout);
+    //std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
     Account::setroot();
