@@ -1,4 +1,4 @@
-#include "Account.hpp"
+#include "account.hpp"
 #include <cstring>
 
 int Account::getPrivilege()
