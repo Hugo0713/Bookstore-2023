@@ -13,8 +13,8 @@ template <typename valueType>
 class Database
 {
 public:
-    const int MAX = 1024;
-    const int LIMIT = 1000;
+    const int MAX = 4096;
+    const int LIMIT = 4000;
     const int SIZE = sizeof(Block<valueType>);
 
     MemoryRiver<Block<valueType>, 3> File; // 前置参数：总块数，起始块，裂块位置
