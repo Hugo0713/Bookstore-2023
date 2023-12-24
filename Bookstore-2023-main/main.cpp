@@ -6,6 +6,12 @@
 std::vector<Account> login_stack;
 Log logg("File_finance");
 
+
+/*
+特别鸣谢助教蒋松霖学长、陈一星学长、江语学长、李兴阳学长，他们在本次大作业编译调试过程中给予我巨大帮助
+以及codemate的资料支持
+*/
+
 bool check(int k, const std::string token[]) // 恰好k个切片
 {
     for (int i = 2; i < 2 + k; ++i)
