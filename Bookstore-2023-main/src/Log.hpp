@@ -2,57 +2,51 @@
 #define CODE_LOG_HPP
 
 #include <iomanip>
+#include "account.hpp"
+#include "../Database/Database.hpp"
+#include "../Database/MemoryRiver.hpp"
 
 class Log
 {
 public:
-    MemoryRiver<double, 1> File_finance;
+    char ID[31];
+    std::string op;
     std::vector<double> finance;
-    Log(std::string file_name) : finance()
+    Log() : finance(), ID{}, op{} {}
+
+    bool operator==(const Log &obj) const
     {
-        File_finance.initialise(file_name);
+        if (strcmp(ID, obj.ID) == 0 && op == obj.op)
+        {
+            return true;
+        }
+        return false;
     }
-
-    void show_finance(int count)
+    bool operator<(const Log &obj) const
     {
-        if (login_stack.back().getPrivilege() != 7)
+        if (strcmp(ID, obj.ID) != 0)
         {
-            throw std::runtime_error("Invalid\n");
+            return op < obj.op;
         }
-        double income = 0.00, outcome = 0.00;
-        int Count;
-        File_finance.get_info(Count, 1);
-        finance.resize(Count);
-        File_finance.read(finance[0], 4, Count); // 想要插入需要先使得vector有这么大
-
-        if (count > Count)
-        {
-            throw std::runtime_error("Invalid\n");
-        }
-        if (count == 0)
-        {
-            count = finance.size();
-        }
-
-        for (int m = Count - 1; m > Count - count - 1; --m)
-        {
-            if (finance[m] < 0)
-            {
-                outcome += finance[m];
-            }
-            else
-            {
-                income += finance[m];
-            }
-        }
+        return (strcmp(ID, obj.ID) < 0);
+    }
+    friend std::ostream &operator<<(std::ostream &out, const Log &obj)
+    {
         std::cout << std::fixed << std::setprecision(2);
-        std::cout << "+"
-                  << " " << income << " "
-                  << "-"
-                  << " " << std::abs(outcome) << "\n";
+        out << obj.ID << "\t" << obj.op;
+        return out;
     }
+
+    void show_finance(int count);
+    void report_finance();
+    void report_employee();
+    void log();
 };
 
-extern Log logg;
+static MemoryRiver<double, 1> File_finance("File_finance");
+static Database<Log> File_log("File_Log");
+static Database<Log> File_employee("File_employee");
 
+// extern Log logg;
+extern std::vector<Account> login_stack;
 #endif

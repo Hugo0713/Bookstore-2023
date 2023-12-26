@@ -6,6 +6,11 @@ int Account::getPrivilege()
     return Privilege;
 }
 
+char *Account::getID()
+{
+    return ID;
+}
+
 void Account::setroot()
 {
     Block<Account> tmp("root");

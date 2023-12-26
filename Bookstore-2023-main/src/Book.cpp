@@ -142,13 +142,11 @@ void Book::buy(char *isbn, int quantity)
     books_Author.Insert(blk3);
 
     int total;
-    logg.File_finance.get_info(total, 1);
-    logg.File_finance.write(money, 4 + sizeof(double) * total, 1);
-    // double hhh;
-    // logg.File_finance.read(hhh, 4 + sizeof(double) * total, 1);
-    // std::cout << hhh << "\n";
+    File_finance.get_info(total, 1);
+    File_finance.write(money, 4 + sizeof(double) * total, 1);
+
     ++total;
-    logg.File_finance.write_info(total, 1);
+    File_finance.write_info(total, 1);
 
     std::cout << std::fixed << std::setprecision(2);
     std::cout << money << "\n";
@@ -391,9 +389,9 @@ void Book::import(int quantity, double Totalcost)
     books_Author.Insert(blk3);
 
     int total;
-    logg.File_finance.get_info(total, 1);
+    File_finance.get_info(total, 1);
     double money = -Totalcost;
-    logg.File_finance.write(money, 4 + sizeof(double) * total, 1);
+    File_finance.write(money, 4 + sizeof(double) * total, 1);
     ++total;
-    logg.File_finance.write_info(total, 1);
+    File_finance.write_info(total, 1);
 }

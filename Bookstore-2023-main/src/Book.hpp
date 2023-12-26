@@ -108,5 +108,6 @@ static Database<Book> books_Name("File_Name");
 static Database<Book> books_Author("File_Author");
 static Database<Book> books_Keyword("File_Keyword");
 extern std::vector<Account> login_stack;
+//extern Log logg;
 
 #endif

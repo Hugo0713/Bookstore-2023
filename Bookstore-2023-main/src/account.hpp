@@ -55,6 +55,7 @@ public:
     }
 
     int getPrivilege();
+    char *getID();
     static void setroot();
     static void login(char *ID, char *Passward);
     void logout();
@@ -65,5 +66,6 @@ public:
 };
 static Database<Account> users("File_Account");
 extern std::vector<Account> login_stack;
+
 
 #endif

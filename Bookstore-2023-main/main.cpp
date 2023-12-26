@@ -1,10 +1,11 @@
 #include <iostream>
+#include <ctime>
 #include "Utils/tokenScanner.hpp"
 // #include "src/Account.hpp"
 #include "src/Book.hpp"
 #include "src/Log.hpp"
 std::vector<Account> login_stack;
-Log logg("File_finance");
+//Log logg;
 
 
 /*
@@ -28,12 +29,31 @@ bool check(int k, const std::string token[]) // 恰好k个切片
     return true;
 }
 
-void processLine(std::string line, Account &user, Book &book)
+void log_add(std::string line, char *buffer)
+{
+    Block<Log> blk;
+    Log log;
+    strncpy(log.ID, login_stack.back().getID(), sizeof(log.ID));
+    log.op = line;
+    strncpy(blk.index, buffer, sizeof(blk.index));
+    File_log.Insert(blk);
+    if(login_stack.back().getPrivilege() == 3)
+    {
+        File_employee.Insert(blk);
+    }
+}
+
+void processLine(std::string line, Account &user, Book &book, Log &logg)
 {
     TokenScanner scanner;
     scanner.ignoreWhitespace();
     // scanner.scanNumbers();
     scanner.setInput(line);
+
+    std::time_t currentTime = std::time(nullptr);
+    char buffer[80];
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&currentTime));
+
     std::string token[20]{};
     int i = 1;
     while (scanner.hasMoreTokens())
@@ -78,6 +98,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         Account::login(token[2].data(), token[3].data());
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "logout")
     {
@@ -96,6 +117,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         user.signup(token[2].data(), token[3].data(), token[4].data());
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "passwd")
     {
@@ -109,6 +131,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         user.modify(token[2].data(), token[3].data(), token[4].data());
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "useradd")
     {
@@ -127,6 +150,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         user.useradd(token[2].data(), token[3].data(), stoi(token[4]), token[5].data());
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "delete")
     {
@@ -140,6 +164,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         user.del(token[2].data());
         flag = true;
+        log_add(line, buffer);
     }
 
     if (token[1] == "show" && token[2] != "finance")
@@ -177,6 +202,7 @@ void processLine(std::string line, Account &user, Book &book)
             book.show_all();
         }
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "buy")
     {
@@ -190,6 +216,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         book.buy(token[2].data(), stoi(token[3]));
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "select")
     {
@@ -203,6 +230,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         book.select(token[2].data());
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "modify")
     {
@@ -263,6 +291,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         book.modify(tmp[0].data(), tmp[1].data(), tmp[2].data(), tmp[3].data(), value);
         flag = true;
+        log_add(line, buffer);
     }
     if (token[1] == "import")
     {
@@ -276,6 +305,7 @@ void processLine(std::string line, Account &user, Book &book)
         }
         book.import(stoi(token[2]), stod(token[3]));
         flag = true;
+        log_add(line, buffer);
     }
 
     if (token[1] == "show" && token[2] == "finance")
@@ -300,6 +330,25 @@ void processLine(std::string line, Account &user, Book &book)
             }
         }
         flag = true;
+        log_add(line, buffer);
+    }
+    if(token[1] == "report" && token[2] == "finance")
+    {
+        flag = true;
+        logg.report_finance();
+        log_add(line, buffer);
+    }
+    if(token[1] == "report" && token[2] == "employee")
+    {
+        flag = true;
+        logg.report_employee();
+        log_add(line, buffer);
+    }
+    if(token[1] == "log")
+    {
+        flag = true;
+        logg.log();
+        log_add(line, buffer);
     }
 
     if (!flag)
@@ -314,6 +363,7 @@ int main()
     //std::freopen("output.txt", "w", stdout);
     Account user;
     Book book;
+    Log logg;
     Account::setroot();
     while (true)
     {
@@ -325,7 +375,7 @@ int main()
             {
                 return 0;
             }
-            processLine(input, user, book);
+            processLine(input, user, book, logg);
         }
         catch (const std::exception &e)
         {
